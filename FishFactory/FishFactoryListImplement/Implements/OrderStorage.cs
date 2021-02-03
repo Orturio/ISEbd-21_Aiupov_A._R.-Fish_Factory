@@ -106,15 +106,34 @@ namespace FishFactoryListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order component)
         {
             component.ProductId = model.ProductId;
+            component.Count = model.Count;
+            component.Sum = model.Sum;
+            component.Status = model.Status;
+            component.DateCreate = model.DateCreate;
+            component.DateImplement = model.DateImplement;
             return component;
         }
 
-        private OrderViewModel CreateModel(Order component)
+        private OrderViewModel CreateModel(Order order)
         {
+            string productName = null;
+            foreach (var product in source.Products)
+            {
+                if (product.Id == order.ProductId)
+                {
+                    productName = product.ProductName;
+                }
+            }
             return new OrderViewModel
             {
-                Id = component.Id,
-                ProductId = component.ProductId
+                Id = order.Id,
+                ProductId = order.ProductId,
+                Count = order.Count,
+                Sum = order.Sum,
+                DateCreate = order.DateCreate,
+                Status = order.Status,
+                DateImplement = order.DateImplement,
+                ProductName = productName
             };
         }
     }

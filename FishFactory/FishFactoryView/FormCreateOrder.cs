@@ -27,7 +27,14 @@ namespace FishFactoryView
         {
             try
             {
-                // продумать логику
+                var list = _logicP.Read(null);
+                foreach (var item in list)
+                {
+                    comboBoxProduct.DisplayMember = "ProductName";
+                    comboBoxProduct.ValueMember = "Id";
+                    comboBoxProduct.DataSource = list;
+                    comboBoxProduct.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {

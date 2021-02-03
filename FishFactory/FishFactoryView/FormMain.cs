@@ -28,7 +28,16 @@ namespace FishFactoryView
         {
             try
             {
-                // продумать логику
+                var list = _orderLogic.Read(null);
+                if (list != null)
+                {
+                    dataGridView.Rows.Clear();              
+                    foreach (var order in list)
+                    {
+                        dataGridView.Rows.Add(new object[] { order.Id, order.ProductId, order.ProductName, order.Count, order.Sum, 
+order.Status,order.DateCreate, order.DateImplement});
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -45,7 +54,7 @@ MessageBoxIcon.Error);
 
         private void ИзделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCanned>();
+            var form = Container.Resolve<FormCanneds>();
             form.ShowDialog();
         }
 

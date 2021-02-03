@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCanneds.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCanneds.Designer.cs">
+      <DependentUpon>FormCanneds.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCanned.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormCanneds.resx">
+      <DependentUpon>FormCanneds.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCanned.resx">
       <DependentUpon>FormCanned.cs</DependentUpon>
     </EmbeddedResource>
