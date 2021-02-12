@@ -28,6 +28,5 @@ namespace FishFactoryListImplement
             }
             return instance;
         }
-
     }
 }

@@ -80,6 +80,12 @@ namespace FishFactoryFileImplement
 
                 foreach (var elem in xElements)
                 {
+                    DateTime? dateImplement = null;
+                    if (elem.Element("DateImplement").Value != "")
+                    {
+                        dateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value);
+                    }
+                    
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
@@ -88,7 +94,7 @@ namespace FishFactoryFileImplement
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = (OrderStatus) Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value), 
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
-                        DateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value)   
+                        DateImplement = dateImplement
                     });
                 }
             }
