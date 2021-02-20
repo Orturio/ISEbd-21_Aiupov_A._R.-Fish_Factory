@@ -19,7 +19,7 @@ namespace FishFactoryFileImplement.Implements
 
         public List<CannedViewModel> GetFullList()
         {
-            return source.Products.Select(CreateModel).ToList();
+            return source.Canneds.Select(CreateModel).ToList();
         }
 
         public List<CannedViewModel> GetFilteredList(CannedBindingModel model)
@@ -28,7 +28,7 @@ namespace FishFactoryFileImplement.Implements
             {
                 return null;
             }
-            return source.Products.Where(rec => rec.ProductName.Contains(model.ProductName)).Select(CreateModel).ToList();
+            return source.Canneds.Where(rec => rec.CannedName.Contains(model.CannedName)).Select(CreateModel).ToList();
         }
 
         public CannedViewModel GetElement(CannedBindingModel model)
@@ -38,22 +38,22 @@ namespace FishFactoryFileImplement.Implements
                 return null;
             }
 
-            var product = source.Products.FirstOrDefault(rec => rec.ProductName == model.ProductName || rec.Id == model.Id);
+            var canned = source.Canneds.FirstOrDefault(rec => rec.CannedName == model.CannedName || rec.Id == model.Id);
 
-            return product != null ? CreateModel(product) : null;
+            return canned != null ? CreateModel(canned) : null;
         }
 
         public void Insert(CannedBindingModel model)
         {
-            int maxId = source.Products.Count > 0 ? source.Components.Max(rec => rec.Id): 0;
+            int maxId = source.Canneds.Count > 0 ? source.Components.Max(rec => rec.Id): 0;
 
-            var element = new Canned { Id = maxId + 1, ProductComponents = new Dictionary<int, int>()};
-            source.Products.Add(CreateModel(model, element));
+            var element = new Canned { Id = maxId + 1, CannedComponents = new Dictionary<int, int>()};
+            source.Canneds.Add(CreateModel(model, element));
         }
 
         public void Update(CannedBindingModel model)
         {
-            var element = source.Products.FirstOrDefault(rec => rec.Id == model.Id);
+            var element = source.Canneds.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -64,10 +64,10 @@ namespace FishFactoryFileImplement.Implements
 
         public void Delete(CannedBindingModel model)
         {
-            Canned element = source.Products.FirstOrDefault(rec => rec.Id == model.Id);
+            Canned element = source.Canneds.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
-                source.Products.Remove(element);
+                source.Canneds.Remove(element);
             }
             else
             {
@@ -75,42 +75,42 @@ namespace FishFactoryFileImplement.Implements
             }
         }
 
-        private Canned CreateModel(CannedBindingModel model, Canned product)
+        private Canned CreateModel(CannedBindingModel model, Canned canned)
         {
-            product.ProductName = model.ProductName;
-            product.Price = model.Price;
+            canned.CannedName = model.CannedName;
+            canned.Price = model.Price;
             // удаляем убранные
-            foreach (var key in product.ProductComponents.Keys.ToList())
+            foreach (var key in canned.CannedComponents.Keys.ToList())
             {
-                if (!model.ProductComponents.ContainsKey(key))
+                if (!model.CannedComponents.ContainsKey(key))
                 {
-                    product.ProductComponents.Remove(key);
+                    canned.CannedComponents.Remove(key);
                 }
             }
             // обновляем существуюущие и добавляем новые
-            foreach (var component in model.ProductComponents)
+            foreach (var component in model.CannedComponents)
             {
-                if (product.ProductComponents.ContainsKey(component.Key))
+                if (canned.CannedComponents.ContainsKey(component.Key))
                 {
-                    product.ProductComponents[component.Key] = model.ProductComponents[component.Key].Item2;
+                    canned.CannedComponents[component.Key] = model.CannedComponents[component.Key].Item2;
                 }
                 else
                 {
-                    product.ProductComponents.Add(component.Key, model.ProductComponents[component.Key].Item2);
+                    canned.CannedComponents.Add(component.Key, model.CannedComponents[component.Key].Item2);
                 }
             }
 
-            return product;
+            return canned;
         }
 
-        private CannedViewModel CreateModel(Canned product)
+        private CannedViewModel CreateModel(Canned canned)
         {
             return new CannedViewModel
             {
-                Id = product.Id,
-                ProductName = product.ProductName,
-                Price = product.Price,
-                ProductComponents = product.ProductComponents.ToDictionary(recPC => recPC.Key, recPC => 
+                Id = canned.Id,
+                CannedName = canned.CannedName,
+                Price = canned.Price,
+                CannedComponents = canned.CannedComponents.ToDictionary(recPC => recPC.Key, recPC => 
 (source.Components.FirstOrDefault(recC => recC.Id == recPC.Key)?.ComponentName, recPC.Value))
             };
         }

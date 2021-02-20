@@ -39,7 +39,7 @@
             this.buttonRef = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CannedID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Canned = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -139,7 +139,7 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
-            this.ProductID,
+            this.CannedID,
             this.Canned,
             this.Count,
             this.Sum,
@@ -157,11 +157,11 @@
             this.ID.Name = "ID";
             this.ID.Visible = false;
             // 
-            // ProductID
+            // CannedID
             // 
-            this.ProductID.HeaderText = "ProductId";
-            this.ProductID.Name = "ProductID";
-            this.ProductID.Visible = false;
+            this.CannedID.HeaderText = "CannedID";
+            this.CannedID.Name = "CannedID";
+            this.CannedID.Visible = false;
             // 
             // Canned
             // 
@@ -230,7 +230,7 @@
         private System.Windows.Forms.Button buttonRef;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CannedID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Canned;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sum;

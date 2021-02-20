@@ -202,7 +202,7 @@
 			this.Controls.Add(this.textBoxName);
 			this.Name = "FormCanned";
 			this.Text = "Изделие";
-			this.Load += new System.EventHandler(this.FormProduct_Load);
+			this.Load += new System.EventHandler(this.FormCanned_Load);
 			this.groupBoxComponents.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
 			this.ResumeLayout(false);

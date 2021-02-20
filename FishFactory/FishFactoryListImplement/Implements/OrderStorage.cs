@@ -35,7 +35,7 @@ namespace FishFactoryListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.ProductId.ToString().Contains(model.ProductId.ToString()))
+                if (order.CannedId.ToString().Contains(model.CannedId.ToString()))
                 {
                     result.Add(CreateModel(order));
                 }
@@ -51,8 +51,8 @@ namespace FishFactoryListImplement.Implements
             }
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id || order.ProductId ==
-               model.ProductId)
+                if (order.Id == model.Id || order.CannedId ==
+               model.CannedId)
                 {
                     return CreateModel(order);
                 }
@@ -105,7 +105,7 @@ namespace FishFactoryListImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order order)
         {
-            order.ProductId = model.ProductId;
+            order.CannedId = model.CannedId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -116,25 +116,25 @@ namespace FishFactoryListImplement.Implements
 
         private OrderViewModel CreateModel(Order order)
         {
-            string productName = null;
-            foreach (var product in source.Products)
+            string cannedName = null;
+            foreach (var canned in source.Canneds)
             {
-                if (product.Id == order.ProductId)
+                if (canned.Id == order.CannedId)
                 {
-                    productName = product.ProductName;
+                    cannedName = canned.CannedName;
                 }
             }
 
             return new OrderViewModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                CannedId = order.CannedId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                ProductName = productName
+                CannedName = cannedName
             };
         }
     }

@@ -17,19 +17,19 @@ namespace FishFactoryFileImplement
 
         private readonly string OrderFileName = "Order.xml";
 
-        private readonly string ProductFileName = "Product.xml";
+        private readonly string CannedFileName = "Canned.xml";
 
         public List<Component> Components { get; set; }
 
         public List<Order> Orders { get; set; }
 
-        public List<Canned> Products { get; set; }
+        public List<Canned> Canneds { get; set; }
 
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
-            Products = LoadProducts();
+            Canneds = LoadCanneds();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -45,7 +45,7 @@ namespace FishFactoryFileImplement
         {
             SaveComponents();
             SaveOrders();
-            SaveProducts();
+            SaveCanneds();
         }
 
         private List<Component> LoadComponents()
@@ -85,14 +85,14 @@ namespace FishFactoryFileImplement
                     {
                         dateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value);
                     }
-                    
+
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        ProductId = Convert.ToInt32(elem.Element("ProductId").Value),
+                        CannedId = Convert.ToInt32(elem.Element("CannedId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
-                        Status = (OrderStatus) Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value), 
+                        Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
                         DateImplement = dateImplement
                     });
@@ -101,21 +101,21 @@ namespace FishFactoryFileImplement
             return list;
         }
 
-        private List<Canned> LoadProducts()
+        private List<Canned> LoadCanneds()
         {
             var list = new List<Canned>();
 
-            if (File.Exists(ProductFileName))
+            if (File.Exists(CannedFileName))
             {
-                XDocument xDocument = XDocument.Load(ProductFileName);
+                XDocument xDocument = XDocument.Load(CannedFileName);
 
-                var xElements = xDocument.Root.Elements("Product").ToList();
+                var xElements = xDocument.Root.Elements("Canned").ToList();
 
                 foreach (var elem in xElements)
                 {
                     var prodComp = new Dictionary<int, int>();
                     foreach (var component in
-elem.Element("ProductComponents").Elements("ProductComponent").ToList())
+elem.Element("CannedComponents").Elements("CannedComponent").ToList())
                     {
                         prodComp.Add(Convert.ToInt32(component.Element("Key").Value),
 Convert.ToInt32(component.Element("Value").Value));
@@ -123,9 +123,9 @@ Convert.ToInt32(component.Element("Value").Value));
                     list.Add(new Canned
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        ProductName = elem.Element("ProductName").Value,
+                        CannedName = elem.Element("CannedName").Value,
                         Price = Convert.ToDecimal(elem.Element("Price").Value),
-                        ProductComponents = prodComp
+                        CannedComponents = prodComp
                     });
                 }
             }
@@ -159,44 +159,44 @@ Convert.ToInt32(component.Element("Value").Value));
                 {
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
-                    new XElement("ProductId", order.ProductId),
+                    new XElement("CannedId", order.CannedId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
                     new XElement("Status", order.Status),
                     new XElement("DateCreate", order.DateCreate),
-                    new XElement("DateImplement", order.DateImplement)));                    
+                    new XElement("DateImplement", order.DateImplement)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(OrderFileName);
             }
         }
 
-        private void SaveProducts()
+        private void SaveCanneds()
         {
-            if (Products != null)
+            if (Canneds != null)
             {
-                var xElement = new XElement("Products");
+                var xElement = new XElement("Canneds");
 
-                foreach (var product in Products)
+                foreach (var canned in Canneds)
                 {
-                    var compElement = new XElement("ProductComponents");
+                    var compElement = new XElement("CannedComponents");
 
-                    foreach (var component in product.ProductComponents)
+                    foreach (var component in canned.CannedComponents)
                     {
-                        compElement.Add(new XElement("ProductComponent",
+                        compElement.Add(new XElement("CannedComponents",
                         new XElement("Key", component.Key),
                         new XElement("Value", component.Value)));
                     }
 
-                    xElement.Add(new XElement("Product",
-                        new XAttribute("Id", product.Id),
-                        new XElement("ProductName", product.ProductName),
-                        new XElement("Price", product.Price),
+                    xElement.Add(new XElement("Canned",
+                        new XAttribute("Id", canned.Id),
+                        new XElement("CannedName", canned.CannedName),
+                        new XElement("Price", canned.Price),
                         compElement));
                 }
 
                 XDocument xDocument = new XDocument(xElement);
-                xDocument.Save(ProductFileName);
+                xDocument.Save(CannedFileName);
             }
         }
     }

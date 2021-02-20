@@ -8,11 +8,11 @@ namespace FishFactoryBusinessLogic.ViewModels
         public int Id { get; set; }
 
         [DisplayName("Название изделия")]
-        public string ProductName { get; set; }
+        public string CannedName { get; set; }
 
         [DisplayName("Цена")]
         public decimal Price { get; set; }
 
-        public Dictionary<int, (string, int)> ProductComponents { get; set; }
+        public Dictionary<int, (string, int)> CannedComponents { get; set; }
     }
 }
