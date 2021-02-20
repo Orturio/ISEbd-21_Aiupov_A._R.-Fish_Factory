@@ -83,6 +83,7 @@ namespace FishFactoryListImplement.Implements
         public void Update(CannedBindingModel model)
         {
             Canned tempCanned = null;
+
             foreach (var canned in source.Canneds)
             {
                 if (canned.Id == model.Id)
@@ -90,6 +91,7 @@ namespace FishFactoryListImplement.Implements
                     tempCanned = canned;
                 }
             }
+
             if (tempCanned == null)
             {
                 throw new Exception("Элемент не найден");
