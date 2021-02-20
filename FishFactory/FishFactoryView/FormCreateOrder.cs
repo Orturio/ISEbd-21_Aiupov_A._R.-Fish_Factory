@@ -51,9 +51,9 @@ MessageBoxIcon.Error);
                 try
                 {
                     int id = Convert.ToInt32(comboBoxCanned.SelectedValue);
-                    CannedViewModel product = _logicP.Read(new CannedBindingModel{Id = id})?[0];
+                    CannedViewModel canned = _logicP.Read(new CannedBindingModel{Id = id})?[0];
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * product?.Price ?? 0).ToString();
+                    textBoxSum.Text = (count * canned?.Price ?? 0).ToString();
                 }
 
                 catch (Exception ex)

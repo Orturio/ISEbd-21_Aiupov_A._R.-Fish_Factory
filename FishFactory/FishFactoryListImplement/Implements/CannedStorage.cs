@@ -69,7 +69,6 @@ namespace FishFactoryListImplement.Implements
                 Id = 1,
                 CannedComponents = new Dictionary<int, int>()
             };
-
             foreach (var canned in source.Canneds)
             {
                 if (canned.Id >= tempCanned.Id)
