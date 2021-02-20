@@ -8,10 +8,10 @@ namespace FishFactoryBusinessLogic.ViewModels
     {
         public int Id { get; set; }
 
-        public int ProductId { get; set; }
+        public int CannedId { get; set; }
 
         [DisplayName("Изделие")]
-        public string ProductName { get; set; }
+        public string CannedName { get; set; }
 
         [DisplayName("Количество")]
         public int Count { get; set; }

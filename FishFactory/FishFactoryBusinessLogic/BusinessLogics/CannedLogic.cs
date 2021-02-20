@@ -32,7 +32,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
 
         public void CreateOrUpdate(CannedBindingModel model)
         {
-            var element = _cannedStorage.GetElement(new CannedBindingModel { ProductName = model.ProductName });
+            var element = _cannedStorage.GetElement(new CannedBindingModel { CannedName = model.CannedName });
 
             if (element != null && element.Id != model.Id)
             {

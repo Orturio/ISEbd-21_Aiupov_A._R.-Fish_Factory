@@ -2,7 +2,7 @@
 {
     public class CreateOrderBindingModel
     {
-        public int ProductId { get; set; }
+        public int CannedId { get; set; }
 
         public int Count { get; set; }
 

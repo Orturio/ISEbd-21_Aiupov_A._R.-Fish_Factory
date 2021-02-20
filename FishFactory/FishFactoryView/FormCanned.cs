@@ -21,7 +21,7 @@ namespace FishFactoryView
 
         private int? id;
 
-        private Dictionary<int, (string, int)> productComponents;
+        private Dictionary<int, (string, int)> cannedComponents;
 
         public FormCanned(CannedLogic service)
         {
@@ -39,9 +39,9 @@ namespace FishFactoryView
 
                     if (view != null)
                     {
-                        textBoxName.Text = view.ProductName;
+                        textBoxName.Text = view.CannedName;
                         textBoxPrice.Text = view.Price.ToString();
-                        productComponents = view.ProductComponents;
+                        cannedComponents = view.CannedComponents;
                         LoadData();
                     }
                 }
@@ -55,7 +55,7 @@ MessageBoxIcon.Error);
 
             else
             {
-                productComponents = new Dictionary<int, (string, int)>();
+                cannedComponents = new Dictionary<int, (string, int)>();
             }
         }
 
@@ -63,13 +63,12 @@ MessageBoxIcon.Error);
         {
             try
             {
-                if (productComponents != null)
+                if (cannedComponents != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var pc in productComponents)
+                    foreach (var pc in cannedComponents)
                     {
-                        dataGridView.Rows.Add(new object[] {pc.Key, pc.Value.Item1,
-pc.Value.Item2});
+                        dataGridView.Rows.Add(new object[] {pc.Key, pc.Value.Item1, pc.Value.Item2});
                     }
                 }
             }
@@ -87,14 +86,14 @@ MessageBoxIcon.Error);
 
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (productComponents.ContainsKey(form.Id))
+                if (cannedComponents.ContainsKey(form.Id))
                 {
-                    productComponents[form.Id] = (form.ComponentName, form.Count);
+                    cannedComponents[form.Id] = (form.ComponentName, form.Count);
                 }
 
                 else
                 {
-                    productComponents.Add(form.Id, (form.ComponentName, form.Count));
+                    cannedComponents.Add(form.Id, (form.ComponentName, form.Count));
                 }
                 LoadData();
             }
@@ -107,11 +106,11 @@ MessageBoxIcon.Error);
                 var form = Container.Resolve<FormCannedComponent>();
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 form.Id = id;
-                form.Count = productComponents[id].Item2;
+                form.Count = cannedComponents[id].Item2;
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    productComponents[form.Id] = (form.ComponentName, form.Count);
+                    cannedComponents[form.Id] = (form.ComponentName, form.Count);
                     LoadData();
                 }
             }
@@ -127,7 +126,7 @@ MessageBoxIcon.Question) == DialogResult.Yes)
                     try
                     {
 
-                        productComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+                        cannedComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
                     }
 
                     catch (Exception ex)
@@ -161,7 +160,7 @@ MessageBoxIcon.Error);
                 return;
             }
 
-            if (productComponents == null || productComponents.Count == 0)
+            if (cannedComponents == null || cannedComponents.Count == 0)
             {
                 MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
 MessageBoxIcon.Error);
@@ -173,9 +172,9 @@ MessageBoxIcon.Error);
                 logic.CreateOrUpdate(new CannedBindingModel
                 {
                     Id = id,
-                    ProductName = textBoxName.Text,
+                    CannedName = textBoxName.Text,
                     Price = Convert.ToDecimal(textBoxPrice.Text),
-                    ProductComponents = productComponents
+                    CannedComponents = cannedComponents
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
 MessageBoxButtons.OK, MessageBoxIcon.Information);

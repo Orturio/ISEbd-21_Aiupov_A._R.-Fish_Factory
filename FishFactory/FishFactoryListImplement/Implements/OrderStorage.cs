@@ -33,11 +33,11 @@ namespace FishFactoryListImplement.Implements
                 return null;
             }
             List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var component in source.Orders)
+            foreach (var order in source.Orders)
             {
-                if (component.ProductId.ToString().Contains(model.ProductId.ToString()))
+                if (order.CannedId.ToString().Contains(model.CannedId.ToString()))
                 {
-                    result.Add(CreateModel(component));
+                    result.Add(CreateModel(order));
                 }
             }
             return result;
@@ -49,12 +49,12 @@ namespace FishFactoryListImplement.Implements
             {
                 return null;
             }
-            foreach (var component in source.Orders)
+            foreach (var order in source.Orders)
             {
-                if (component.Id == model.Id || component.ProductId ==
-               model.ProductId)
+                if (order.Id == model.Id || order.CannedId ==
+               model.CannedId)
                 {
-                    return CreateModel(component);
+                    return CreateModel(order);
                 }
             }
             return null;
@@ -62,15 +62,15 @@ namespace FishFactoryListImplement.Implements
 
         public void Insert(OrderBindingModel model)
         {
-            Order tempComponent = new Order { Id = 1 };
-            foreach (var component in source.Orders)
+            Order tempOrder = new Order { Id = 1 };
+            foreach (var order in source.Orders)
             {
-                if (component.Id >= tempComponent.Id)
+                if (order.Id >= tempOrder.Id)
                 {
-                    tempComponent.Id = component.Id + 1;
+                    tempOrder.Id = order.Id + 1;
                 }
             }
-            source.Orders.Add(CreateModel(model, tempComponent));
+            source.Orders.Add(CreateModel(model, tempOrder));
         }
 
         public void Update(OrderBindingModel model)
@@ -103,37 +103,37 @@ namespace FishFactoryListImplement.Implements
             throw new Exception("Элемент не найден");
         }
 
-        private Order CreateModel(OrderBindingModel model, Order component)
+        private Order CreateModel(OrderBindingModel model, Order order)
         {
-            component.ProductId = model.ProductId;
-            component.Count = model.Count;
-            component.Sum = model.Sum;
-            component.Status = model.Status;
-            component.DateCreate = model.DateCreate;
-            component.DateImplement = model.DateImplement;
-            return component;
+            order.CannedId = model.CannedId;
+            order.Count = model.Count;
+            order.Sum = model.Sum;
+            order.Status = model.Status;
+            order.DateCreate = model.DateCreate;
+            order.DateImplement = model.DateImplement;
+            return order;
         }
 
         private OrderViewModel CreateModel(Order order)
         {
-            string productName = null;
-            foreach (var product in source.Products)
+            string cannedName = null;
+            foreach (var canned in source.Canneds)
             {
-                if (product.Id == order.ProductId)
+                if (canned.Id == order.CannedId)
                 {
-                    productName = product.ProductName;
+                    cannedName = canned.CannedName;
                 }
             }
             return new OrderViewModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                CannedId = order.CannedId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                ProductName = productName
+                CannedName = cannedName
             };
         }
     }

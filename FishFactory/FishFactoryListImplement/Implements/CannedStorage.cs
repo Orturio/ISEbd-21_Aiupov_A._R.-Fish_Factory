@@ -21,9 +21,9 @@ namespace FishFactoryListImplement.Implements
         public List<CannedViewModel> GetFullList()
         {
             List<CannedViewModel> result = new List<CannedViewModel>();
-            foreach (var component in source.Products)
+            foreach (var canned in source.Canneds)
             {
-                result.Add(CreateModel(component));
+                result.Add(CreateModel(canned));
             }
             return result;
         }
@@ -35,11 +35,11 @@ namespace FishFactoryListImplement.Implements
                 return null;
             }
             List<CannedViewModel> result = new List<CannedViewModel>();
-            foreach (var product in source.Products)
+            foreach (var canned in source.Canneds)
             {
-                if (product.ProductName.Contains(model.ProductName))
+                if (canned.CannedName.Contains(model.CannedName))
                 {
-                    result.Add(CreateModel(product));
+                    result.Add(CreateModel(canned));
                 }
             }
             return result;
@@ -51,12 +51,12 @@ namespace FishFactoryListImplement.Implements
             {
                 return null;
             }
-            foreach (var product in source.Products)
+            foreach (var canned in source.Canneds)
             {
-                if (product.Id == model.Id || product.ProductName ==
-                model.ProductName)
+                if (canned.Id == model.Id || canned.CannedName ==
+                model.CannedName)
                 {
-                    return CreateModel(product);
+                    return CreateModel(canned);
                 }
             }
             return null;
@@ -64,87 +64,89 @@ namespace FishFactoryListImplement.Implements
 
         public void Insert(CannedBindingModel model)
         {
-            Canned tempProduct = new Canned
+            Canned tempCanned = new Canned
             {
                 Id = 1,
-                ProductComponents = new
-            Dictionary<int, int>()
+                CannedComponents = new Dictionary<int, int>()
             };
-            foreach (var product in source.Products)
+
+            foreach (var canned in source.Canneds)
             {
-                if (product.Id >= tempProduct.Id)
+                if (canned.Id >= tempCanned.Id)
                 {
-                    tempProduct.Id = product.Id + 1;
+                    tempCanned.Id = canned.Id + 1;
                 }
             }
-            source.Products.Add(CreateModel(model, tempProduct));
+            source.Canneds.Add(CreateModel(model, tempCanned));
         }
 
         public void Update(CannedBindingModel model)
         {
-            Canned tempProduct = null;
-            foreach (var product in source.Products)
+            Canned tempCanned = null;
+
+            foreach (var canned in source.Canneds)
             {
-                if (product.Id == model.Id)
+                if (canned.Id == model.Id)
                 {
-                    tempProduct = product;
+                    tempCanned = canned;
                 }
             }
-            if (tempProduct == null)
+
+            if (tempCanned == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, tempProduct);
+            CreateModel(model, tempCanned);
         }
 
         public void Delete(CannedBindingModel model)
         {
-            for (int i = 0; i < source.Products.Count; ++i)
+            for (int i = 0; i < source.Canneds.Count; ++i)
             {
-                if (source.Products[i].Id == model.Id)
+                if (source.Canneds[i].Id == model.Id)
                 {
-                    source.Products.RemoveAt(i);
+                    source.Canneds.RemoveAt(i);
                     return;
                 }
             }
             throw new Exception("Элемент не найден");
         }
 
-        private Canned CreateModel(CannedBindingModel model, Canned product)
+        private Canned CreateModel(CannedBindingModel model, Canned canned)
         {
-            product.ProductName = model.ProductName;
-            product.Price = model.Price;
+            canned.CannedName = model.CannedName;
+            canned.Price = model.Price;
             // удаляем убранные
-            foreach (var key in product.ProductComponents.Keys.ToList())
+            foreach (var key in canned.CannedComponents.Keys.ToList())
             {
-                if (!model.ProductComponents.ContainsKey(key))
+                if (!model.CannedComponents.ContainsKey(key))
                 {
-                    product.ProductComponents.Remove(key);
+                    canned.CannedComponents.Remove(key);
                 }
             }
             // обновляем существуюущие и добавляем новые
-            foreach (var component in model.ProductComponents)
+            foreach (var component in model.CannedComponents)
             {
-                if (product.ProductComponents.ContainsKey(component.Key))
+                if (canned.CannedComponents.ContainsKey(component.Key))
                 {
-                    product.ProductComponents[component.Key] =
-                    model.ProductComponents[component.Key].Item2;
+                    canned.CannedComponents[component.Key] =
+                    model.CannedComponents[component.Key].Item2;
                 }
                 else
                 {
-                    product.ProductComponents.Add(component.Key,
-                    model.ProductComponents[component.Key].Item2);
+                    canned.CannedComponents.Add(component.Key,
+                    model.CannedComponents[component.Key].Item2);
                 }
             }
-            return product;
+            return canned;
         }
 
-        private CannedViewModel CreateModel(Canned product)
+        private CannedViewModel CreateModel(Canned canned)
         {
             
-            Dictionary<int, (string, int)> productComponents = new
+            Dictionary<int, (string, int)> cannedComponents = new
 Dictionary<int, (string, int)>();
-            foreach (var pc in product.ProductComponents)
+            foreach (var pc in canned.CannedComponents)
             {
                 string componentName = string.Empty;
                 foreach (var component in source.Components)
@@ -155,14 +157,14 @@ Dictionary<int, (string, int)>();
                         break;
                     }
                 }
-                productComponents.Add(pc.Key, (componentName, pc.Value));
+                cannedComponents.Add(pc.Key, (componentName, pc.Value));
             }
             return new CannedViewModel
             {
-                Id = product.Id,
-                ProductName = product.ProductName,
-                Price = product.Price,
-                ProductComponents = productComponents
+                Id = canned.Id,
+                CannedName = canned.CannedName,
+                Price = canned.Price,
+                CannedComponents = cannedComponents
             };
         }
     }

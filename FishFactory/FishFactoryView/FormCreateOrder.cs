@@ -30,7 +30,7 @@ namespace FishFactoryView
                 var list = _logicP.Read(null);
                 foreach (var item in list)
                 {
-                    comboBoxProduct.DisplayMember = "ProductName";
+                    comboBoxProduct.DisplayMember = "CannedName";
                     comboBoxProduct.ValueMember = "Id";
                     comboBoxProduct.DataSource = list;
                     comboBoxProduct.SelectedItem = null;
@@ -94,7 +94,7 @@ MessageBoxIcon.Error);
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
-                    ProductId = Convert.ToInt32(comboBoxProduct.SelectedValue),
+                    CannedId = Convert.ToInt32(comboBoxProduct.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
