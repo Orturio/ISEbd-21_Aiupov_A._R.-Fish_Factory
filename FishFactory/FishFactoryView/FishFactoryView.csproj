@@ -179,10 +179,6 @@
       <Project>{b6b28f75-bf75-48c3-b29c-a00955719a81}</Project>
       <Name>FishFactoryFileImplement</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FishFactoryListImplement\FishFactoryListImplement.csproj">
-      <Project>{5c5402e0-adfa-42d8-86c7-066bbd3d8509}</Project>
-      <Name>FishFactoryListImplement</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -132,6 +132,7 @@ Convert.ToInt32(component.Element("Value").Value));
                         WarehouseName = elem.Element("WarehouseName").Value,
                         Responsible = elem.Element("Responsible").Value,
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
+                        WarehouseComponents = warhComp
                     });
                 }
             }
@@ -220,7 +221,7 @@ Convert.ToInt32(component.Element("Value").Value));
 
                     foreach (var component in warehouse.WarehouseComponents)
                     {
-                        compElement.Add(new XElement("WarehouseComponents",
+                        compElement.Add(new XElement("WarehouseComponent",
                         new XElement("Key", component.Key),
                         new XElement("Value", component.Value)));
                     }
@@ -234,7 +235,7 @@ Convert.ToInt32(component.Element("Value").Value));
                 }
 
                 XDocument xDocument = new XDocument(xElement);
-                xDocument.Save(CannedFileName);
+                xDocument.Save(WarehouseFileName);
             }
         }
 
