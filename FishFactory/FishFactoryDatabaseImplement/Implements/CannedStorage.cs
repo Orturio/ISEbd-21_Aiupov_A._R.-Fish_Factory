@@ -143,6 +143,8 @@ namespace FishFactoryDatabaseImplement.Implements
 
         private Canned CreateModel(CannedBindingModel model, Canned canned, FishFactoryDatabase context)
         {
+            canned.CannedName = model.CannedName;
+            canned.Price = model.Price;
             if (model.Id.HasValue)
             {
                 var productComponents = context.CannedComponents.Where(rec => rec.CannedId == model.Id.Value).ToList();
