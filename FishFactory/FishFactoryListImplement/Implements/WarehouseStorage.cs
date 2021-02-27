@@ -86,6 +86,7 @@ namespace FishFactoryListImplement.Implements
             {
                 throw new Exception("Элемент не найден");
             }
+
             CreateModel(model, tempWarehouse);
         }
         public void Delete(WarehouseBindingModel model)

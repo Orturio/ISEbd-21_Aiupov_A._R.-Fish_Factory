@@ -49,6 +49,34 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             }
         }
 
+        public void Restocking(WarehouseBindingModel model, int WarehouseId, int ComponentId, int Count, string ComponentName)
+        {
+            WarehouseViewModel view = Read(new WarehouseBindingModel
+            {
+                Id = WarehouseId
+            })?[0];
+
+            if (view != null)
+            {
+                model.WarehouseComponents = view.WarehouseComponents;
+                model.DateCreate = view.DateCreate;
+                model.Id = view.Id;
+                model.Responsible = view.Responsible;
+                model.WarehouseName = view.WarehouseName;
+            }
+
+            if (model.WarehouseComponents.ContainsKey(ComponentId))
+            {
+                int count = model.WarehouseComponents[ComponentId].Item2;
+                model.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
+            }
+            else
+            {
+                model.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
+            }
+            CreateOrUpdate(model);
+        }    
+
         public void Delete(WarehouseBindingModel model)
         {
             var element = _warehouseStorage.GetElement(new WarehouseBindingModel

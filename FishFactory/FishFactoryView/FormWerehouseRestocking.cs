@@ -83,31 +83,7 @@ namespace FishFactoryView
                 MessageBoxIcon.Error);
                 return;
             }
-
-            WarehouseViewModel view = logic.Read(new WarehouseBindingModel
-            {
-                Id = WarehouseId
-            })?[0];
-
-            if (view != null)
-            {
-                bm.WarehouseComponents = view.WarehouseComponents;
-                bm.DateCreate = view.DateCreate;
-                bm.Id = view.Id;
-                bm.Responsible = view.Responsible;
-                bm.WarehouseName = view.WarehouseName;
-            }
-
-            if (bm.WarehouseComponents.ContainsKey(ComponentId))
-            {
-                int count = bm.WarehouseComponents[ComponentId].Item2;
-                bm.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
-            }
-            else
-            {
-                bm.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
-            }
-            logic.CreateOrUpdate(bm);
+            logic.Restocking(new WarehouseBindingModel {Id = WarehouseId }, WarehouseId, ComponentId, Count, ComponentName);
 
             DialogResult = DialogResult.OK;
             Close();
