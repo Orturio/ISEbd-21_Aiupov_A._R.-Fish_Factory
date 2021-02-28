@@ -61,7 +61,7 @@
             // labelComponent
             // 
             this.labelComponent.AutoSize = true;
-            this.labelComponent.Location = new System.Drawing.Point(68, 41);
+            this.labelComponent.Location = new System.Drawing.Point(68, 90);
             this.labelComponent.Name = "labelComponent";
             this.labelComponent.Size = new System.Drawing.Size(66, 13);
             this.labelComponent.TabIndex = 7;
@@ -71,7 +71,7 @@
             // 
             this.comboBoxComponent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.comboBoxComponent.FormattingEnabled = true;
-            this.comboBoxComponent.Location = new System.Drawing.Point(152, 38);
+            this.comboBoxComponent.Location = new System.Drawing.Point(152, 87);
             this.comboBoxComponent.Name = "comboBoxComponent";
             this.comboBoxComponent.Size = new System.Drawing.Size(185, 21);
             this.comboBoxComponent.TabIndex = 8;
@@ -95,7 +95,7 @@
             // labelWarehouse
             // 
             this.labelWarehouse.AutoSize = true;
-            this.labelWarehouse.Location = new System.Drawing.Point(68, 90);
+            this.labelWarehouse.Location = new System.Drawing.Point(68, 43);
             this.labelWarehouse.Name = "labelWarehouse";
             this.labelWarehouse.Size = new System.Drawing.Size(41, 13);
             this.labelWarehouse.TabIndex = 11;
@@ -105,7 +105,7 @@
             // 
             this.comboBoxWarehouse.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(152, 87);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(152, 40);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(185, 21);
             this.comboBoxWarehouse.TabIndex = 12;

@@ -14,7 +14,7 @@ namespace FishFactoryBusinessLogic.Interfaces
 
         WarehouseViewModel GetElement(WarehouseBindingModel model);
 
-        //bool Unrestocking(int CannedCount, int CannedId);
+        bool Unrestocking(int CannedCount, int CannedId);
 
         void Restocking(WarehouseBindingModel model, int WarehouseId, int ComponentId, int Count, string ComponentName);
 

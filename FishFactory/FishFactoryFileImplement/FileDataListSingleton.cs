@@ -153,7 +153,7 @@ Convert.ToInt32(component.Element("Value").Value));
                 {
                     var prodComp = new Dictionary<int, int>();
                     foreach (var component in
-elem.Element("CannedComponents").Elements("CannedComponent").ToList())
+elem.Element("CannedComponent").Elements("CannedComponents").ToList())
                     {
                         prodComp.Add(Convert.ToInt32(component.Element("Key").Value),
 Convert.ToInt32(component.Element("Value").Value));
@@ -247,7 +247,7 @@ Convert.ToInt32(component.Element("Value").Value));
 
                 foreach (var canned in Canneds)
                 {
-                    var compElement = new XElement("CannedComponents");
+                    var compElement = new XElement("CannedComponent");
 
                     foreach (var component in canned.CannedComponents)
                     {

@@ -37,10 +37,10 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         public void CreateOrder(CreateOrderBindingModel model)
         {
 
-            //if (!_warehouseStorage.Unrestocking(model.Count, model.CannedId))
-            //{
-            //    throw new Exception("Компонентов недостаточно");
-            //}
+            if (!_warehouseStorage.Unrestocking(model.Count, model.CannedId))
+            {
+                throw new Exception("Компонентов недостаточно");
+            }
 
             _orderStorage.Insert(new OrderBindingModel
             {
