@@ -135,6 +135,34 @@ namespace FishFactoryListImplement.Implements
             return warehouse;
         }
 
+        public void Restocking(WarehouseBindingModel model, int WarehouseId, int ComponentId, int Count, string ComponentName)
+        {
+            WarehouseViewModel view = GetElement(new WarehouseBindingModel
+            {
+                Id = WarehouseId
+            });
+
+            if (view != null)
+            {
+                model.WarehouseComponents = view.WarehouseComponents;
+                model.DateCreate = view.DateCreate;
+                model.Id = view.Id;
+                model.Responsible = view.Responsible;
+                model.WarehouseName = view.WarehouseName;
+            }
+
+            if (model.WarehouseComponents.ContainsKey(ComponentId))
+            {
+                int count = model.WarehouseComponents[ComponentId].Item2;
+                model.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
+            }
+            else
+            {
+                model.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
+            }
+            Update(model);
+        }
+
         private WarehouseViewModel CreateModel(Warehouse warehouse)
         {
             Dictionary<int, (string, int)> warehouseComponents = new

@@ -3,8 +3,7 @@ using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryBusinessLogic.BusinessLogics;
 using System;
 using FishFactoryBusinessLogic.BindingModels;
-using FishFactoryListImplement;
-using FishFactoryListImplement.Models;
+using FishFactoryListImplement.Implements;
 using System.Windows.Forms;
 using Unity;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace FishFactoryView
 {
     public partial class FormWarehouseRestocking : Form
     {
-        WarehouseLogic logic;
+        WarehouseStorage _warehouseStorage = new WarehouseStorage();
 
         WarehouseBindingModel bm = new WarehouseBindingModel();
 
@@ -43,7 +42,6 @@ namespace FishFactoryView
         public FormWarehouseRestocking(ComponentLogic componentlogic, WarehouseLogic warehouseLogic)
         {
             InitializeComponent();
-            logic = warehouseLogic;
             List<ComponentViewModel> listComponent = componentlogic.Read(null);
             if (listComponent != null)
             {
@@ -84,31 +82,7 @@ namespace FishFactoryView
                 return;
             }
 
-            WarehouseViewModel view = logic.Read(new WarehouseBindingModel
-            {
-                Id = WarehouseId
-            })?[0];
-
-            if (view != null)
-            {
-                bm.WarehouseComponents = view.WarehouseComponents;
-                bm.DateCreate = view.DateCreate;
-                bm.Id = view.Id;
-                bm.Responsible = view.Responsible;
-                bm.WarehouseName = view.WarehouseName;
-            }
-
-            if (bm.WarehouseComponents.ContainsKey(ComponentId))
-            {
-                int count = bm.WarehouseComponents[ComponentId].Item2;
-                bm.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
-            }
-            else
-            {
-                bm.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
-            }
-            logic.CreateOrUpdate(bm);
-
+            _warehouseStorage.Restocking(bm, WarehouseId, ComponentId, Count, ComponentName);
             DialogResult = DialogResult.OK;
             Close();
         }
