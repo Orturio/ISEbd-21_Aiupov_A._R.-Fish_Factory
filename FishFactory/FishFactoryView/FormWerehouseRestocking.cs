@@ -4,6 +4,7 @@ using FishFactoryBusinessLogic.BusinessLogics;
 using System;
 using FishFactoryBusinessLogic.BindingModels;
 using FishFactoryFileImplement;
+using FishFactoryFileImplement.Implements;
 using FishFactoryFileImplement.Models;
 using System.Windows.Forms;
 using Unity;
@@ -14,6 +15,8 @@ namespace FishFactoryView
     public partial class FormWarehouseRestocking : Form
     {
         WarehouseLogic logic;
+
+        WarehouseStorage _warehouseStorage = new WarehouseStorage();
 
         WarehouseBindingModel bm = new WarehouseBindingModel();
 
@@ -83,7 +86,7 @@ namespace FishFactoryView
                 MessageBoxIcon.Error);
                 return;
             }
-            logic.Restocking(new WarehouseBindingModel {Id = WarehouseId }, WarehouseId, ComponentId, Count, ComponentName);
+            _warehouseStorage.Restocking(bm, WarehouseId, ComponentId, Count, ComponentName);
 
             DialogResult = DialogResult.OK;
             Close();

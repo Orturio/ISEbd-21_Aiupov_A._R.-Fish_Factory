@@ -11,9 +11,12 @@ namespace FishFactoryBusinessLogic.BusinessLogics
     {
         private readonly IOrderStorage _orderStorage;
 
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly IWarehouseStorage _warehouseStorage;
+
+        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
+            _warehouseStorage = warehouseStorage;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -33,6 +36,12 @@ namespace FishFactoryBusinessLogic.BusinessLogics
 
         public void CreateOrder(CreateOrderBindingModel model)
         {
+
+            //if (!_warehouseStorage.Unrestocking(model.Count, model.CannedId))
+            //{
+            //    throw new Exception("Компонентов недостаточно");
+            //}
+
             _orderStorage.Insert(new OrderBindingModel
             {
                 CannedId = model.CannedId,

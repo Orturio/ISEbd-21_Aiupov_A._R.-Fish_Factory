@@ -75,6 +75,77 @@ namespace FishFactoryFileImplement.Implements
             }
         }
 
+        public void Restocking(WarehouseBindingModel model, int WarehouseId, int ComponentId, int Count, string ComponentName)
+        {
+            WarehouseViewModel view = GetElement( new WarehouseBindingModel
+            {
+                Id = WarehouseId
+            });
+
+            if (view != null)
+            {
+                model.WarehouseComponents = view.WarehouseComponents;
+                model.DateCreate = view.DateCreate;
+                model.Id = view.Id;
+                model.Responsible = view.Responsible;
+                model.WarehouseName = view.WarehouseName;
+            }
+
+            if (model.WarehouseComponents.ContainsKey(ComponentId))
+            {
+                int count = model.WarehouseComponents[ComponentId].Item2;
+                model.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
+            }
+            else
+            {
+                model.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
+            }
+            Update(model);
+        }
+
+        //public bool Unrestocking(int CannedCount, int CannedId)
+        //{
+        //    {
+        //        var list = GetFullList();
+
+        //        int Count = source.Canneds.FirstOrDefault(rec => rec.Id == CannedId).CannedComponents[CannedId] * CannedCount;
+
+        //        if (list.Sum(rec => rec.WarehouseComponents.Values.Sum(item => item.Item2)) / list.Count() < Count)
+        //        {
+        //            return false;
+        //        }
+
+        //        List<WarehouseBindingModel> models = new List<WarehouseBindingModel>();
+
+        //        foreach (var view in list)
+        //        {
+        //            var warehouseComponents = view.WarehouseComponents;
+        //            foreach (var key in view.WarehouseComponents.Keys.ToArray())
+        //            {
+        //                var value = view.WarehouseComponents[key];
+        //                if (value.Item2 >= Count)
+        //                {
+        //                    warehouseComponents[key] = (value.Item1, value.Item2 - Count);
+        //                }
+        //                else
+        //                {
+        //                    warehouseComponents[key] = (value.Item1, 0);
+        //                    Count -= value.Item2;
+        //                }
+        //                Update(new WarehouseBindingModel
+        //                {
+        //                    Id = view.Id,
+        //                    DateCreate = view.DateCreate,
+        //                    Responsible = view.Responsible,
+        //                    WarehouseName = view.WarehouseName,
+        //                    WarehouseComponents = warehouseComponents
+        //                });
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //}
+
         private Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
         {
             warehouse.WarehouseName = model.WarehouseName;
