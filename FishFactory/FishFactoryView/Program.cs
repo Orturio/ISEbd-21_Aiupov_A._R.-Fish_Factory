@@ -35,8 +35,9 @@ namespace FishFactoryView
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<CannedLogic>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new
+           HierarchicalLifetimeManager());
             return currentContainer;
         }
-
     }
 }
