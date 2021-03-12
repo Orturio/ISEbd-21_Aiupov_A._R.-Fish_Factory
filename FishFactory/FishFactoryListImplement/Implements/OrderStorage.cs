@@ -32,6 +32,7 @@ namespace FishFactoryListImplement.Implements
             {
                 return null;
             }
+
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
@@ -40,6 +41,16 @@ namespace FishFactoryListImplement.Implements
                     result.Add(CreateModel(order));
                 }
             }
+
+            List<OrderViewModel> resultRep = new List<OrderViewModel>();
+            foreach (var order in source.Orders)
+            {
+                if (order.DateCreate >= model.DateFrom && order.DateImplement <= model.DateTo)
+                {
+                    resultRep.Add(CreateModel(order));
+                }
+            }
+
             return result;
         }
 

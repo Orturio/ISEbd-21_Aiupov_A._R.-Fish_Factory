@@ -256,6 +256,12 @@
     <Compile Include="FormReportCannedComponents.Designer.cs">
       <DependentUpon>FormReportCannedComponents.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportOrders.Designer.cs">
+      <DependentUpon>FormReportOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
@@ -280,6 +286,9 @@
     <EmbeddedResource Include="FormReportCannedComponents.resx">
       <DependentUpon>FormReportCannedComponents.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportOrders.resx">
+      <DependentUpon>FormReportOrders.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -294,6 +303,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Report.rdlc" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\FishFactoryBusinessLogic.ViewModels.CannedViewModel.datasource" />
+    <None Include="Properties\DataSources\FishFactoryBusinessLogic.ViewModels.ComponentViewModel.datasource" />
+    <None Include="Properties\DataSources\FishFactoryBusinessLogic.ViewModels.OrderViewModel.datasource" />
+    <None Include="Properties\DataSources\FishFactoryBusinessLogic.ViewModels.ReportOrdersViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

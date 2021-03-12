@@ -57,7 +57,7 @@ namespace FishFactoryView
                 {
                     try
                     {
-                        logic.SaveProductComponentToExcelFile(new ReportBindingModel
+                        logic.SaveCannedComponentToExcelFile(new ReportBindingModel
                         {
                             FileName = dialog.FileName
                         });

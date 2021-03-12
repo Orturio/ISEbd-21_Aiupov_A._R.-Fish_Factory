@@ -10,5 +10,7 @@ namespace FishFactoryBusinessLogic.HelperModels
         public string Title { get; set; }
 
         public List<ComponentViewModel> Components { get; set; }
+
+        public List<CannedViewModel> Canneds { get; set; }
     }
 }

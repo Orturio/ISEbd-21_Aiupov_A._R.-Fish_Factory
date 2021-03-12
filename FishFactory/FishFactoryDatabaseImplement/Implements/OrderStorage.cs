@@ -35,10 +35,29 @@ namespace FishFactoryDatabaseImplement.Implements
             {
                 return null;
             }
+
+            if (model.DateFrom != null && model.DateTo != null)
+            {
+                using (var context = new FishFactoryDatabase())
+                {
+                    return context.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateImplement <= model.DateTo).Select(rec => new OrderViewModel
+                    {
+                        Id = rec.Id,
+                        CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
+                        CannedId = rec.CannedId,
+                        Count = rec.Count,
+                        Sum = rec.Sum,
+                        Status = rec.Status,
+                        DateCreate = rec.DateCreate,
+                        DateImplement = rec.DateImplement
+                    }).ToList();
+                }
+            }
+
             using (var context = new FishFactoryDatabase())
             {
                 return context.Orders.Where(rec => rec.Id.Equals(model.Id)).Select(rec => new OrderViewModel
-                { 
+                {
                     Id = rec.Id,
                     CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
                     CannedId = rec.CannedId,

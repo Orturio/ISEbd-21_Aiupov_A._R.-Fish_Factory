@@ -28,6 +28,10 @@ namespace FishFactoryFileImplement.Implements
             {
                 return null;
             }
+            if (model.DateFrom != null && model.DateTo != null)
+            {
+                return source.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateImplement <= model.DateTo).Select(CreateModel).ToList();
+            }
             return source.Orders.Where(rec => rec.CannedId.ToString().Contains(model.CannedId.ToString())).Select(CreateModel).ToList();
         }
 

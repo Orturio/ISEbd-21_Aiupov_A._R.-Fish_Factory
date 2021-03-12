@@ -11,12 +11,12 @@ namespace FishFactoryBusinessLogic.BusinessLogics
     public class ReportLogic
     {
         private readonly IComponentStorage _componentStorage;
-        private readonly ICannedStorage _productStorage;
+        private readonly ICannedStorage _cannedStorage;
         private readonly IOrderStorage _orderStorage;
 
-        public ReportLogic(ICannedStorage productStorage, IComponentStorage componentStorage, IOrderStorage orderStorage)
+        public ReportLogic(ICannedStorage cannedStorage, IComponentStorage componentStorage, IOrderStorage orderStorage)
         {
-            _productStorage = productStorage;
+            _cannedStorage = cannedStorage;
             _componentStorage = componentStorage;
             _orderStorage = orderStorage;
         }
@@ -29,7 +29,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         {
             var components = _componentStorage.GetFullList();
 
-            var products = _productStorage.GetFullList();
+            var canneds = _cannedStorage.GetFullList();
 
             var list = new List<ReportCannedComponentViewModel>();
 
@@ -42,14 +42,14 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                     TotalCount = 0
                 };
 
-                foreach (var product in products)
+                foreach (var canned in canneds)
                 {
-                    if (product.CannedComponents.ContainsKey(component.Id))
+                    if (canned.CannedComponents.ContainsKey(component.Id))
                     {
-                        record.Canneds.Add(new Tuple<string, int>(product.CannedName,
-                       product.CannedComponents[component.Id].Item2));
+                        record.Canneds.Add(new Tuple<string, int>(canned.CannedName,
+                       canned.CannedComponents[component.Id].Item2));
                         record.TotalCount +=
-                       product.CannedComponents[component.Id].Item2;
+                       canned.CannedComponents[component.Id].Item2;
                     }
                 }
                 list.Add(record);
@@ -87,10 +87,18 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-
                 Title = "Список компонент",
-
                 Components = _componentStorage.GetFullList()
+            });
+        }
+
+        public void SaveCannedsToWordFile(ReportBindingModel model)
+        {
+            SaveToWord.CreateDocCanned(new WordInfo
+            {
+                FileName = model.FileName,
+                Title = "Список изделий",
+                Canneds = _cannedStorage.GetFullList()
             });
         }
 
@@ -98,7 +106,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
-        public void SaveProductComponentToExcelFile(ReportBindingModel model)
+        public void SaveCannedComponentToExcelFile(ReportBindingModel model)
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {

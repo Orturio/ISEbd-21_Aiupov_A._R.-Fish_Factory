@@ -51,7 +51,57 @@ WordTextProperties {Bold = true, Size = "24", } ) },
                 wordDocument.MainDocumentPart.Document.Save();
             }
         }
-            
+
+        public static void CreateDocCanned(WordInfo info)
+        {
+            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(info.FileName, WordprocessingDocumentType.Document))
+            {
+                MainDocumentPart mainPart = wordDocument.AddMainDocumentPart();
+
+                mainPart.Document = new Document();
+
+                Body docBody = mainPart.Document.AppendChild(new Body());
+
+                docBody.AppendChild(CreateParagraph(new WordParagraph
+                {
+                    Texts = new List<(string, WordTextProperties)> { (info.Title, new
+WordTextProperties {Bold = true, Size = "24", } ) },
+                    TextProperties = new WordTextProperties
+                    {
+                        Size = "24",
+                        JustificationValues = JustificationValues.Center
+                    }
+                }));
+
+                foreach (var canned in info.Canneds)
+                {
+                    docBody.AppendChild(CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordTextProperties)> {
+("Название: " + canned.CannedName, new WordTextProperties {Bold = true, Size = "24", }) },
+                        TextProperties = new WordTextProperties
+                        {
+                            Size = "24",
+                            JustificationValues = JustificationValues.Both
+                        }     
+                    }));;
+                    docBody.AppendChild(CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordTextProperties)> {
+("Цена: " + canned.Price.ToString(), new WordTextProperties {Bold = false, Size = "24", }) },
+                        TextProperties = new WordTextProperties
+                        {
+                            Size = "24",
+                            JustificationValues = JustificationValues.Both
+                        }
+                    })); ;
+                }
+                docBody.AppendChild(CreateSectionProperties());
+
+                wordDocument.MainDocumentPart.Document.Save();
+            }
+        }
+
         /// <summary>
         /// Настройки страницы
         /// </summary>
@@ -133,8 +183,7 @@ WordTextProperties {Bold = true, Size = "24", } ) },
                 {
                     paragraphMarkRunProperties.AppendChild(new FontSize
                     {
-                        Val =
-                   paragraphProperties.Size
+                        Val = paragraphProperties.Size
                     });
                 }
                 properties.AppendChild(paragraphMarkRunProperties);
