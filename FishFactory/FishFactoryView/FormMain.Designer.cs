@@ -38,14 +38,6 @@
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CannedID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Canned = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCreate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -137,61 +129,10 @@
             // 
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.CannedID,
-            this.Canned,
-            this.Count,
-            this.Sum,
-            this.Status,
-            this.DateCreate,
-            this.DateEnd});
             this.dataGridView.Location = new System.Drawing.Point(0, 27);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(628, 421);
             this.dataGridView.TabIndex = 12;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "id";
-            this.ID.Name = "ID";
-            this.ID.Visible = false;
-            // 
-            // CannedID
-            // 
-            this.CannedID.HeaderText = "CannedID";
-            this.CannedID.Name = "CannedID";
-            this.CannedID.Visible = false;
-            // 
-            // Canned
-            // 
-            this.Canned.HeaderText = "Изделие";
-            this.Canned.Name = "Canned";
-            // 
-            // Count
-            // 
-            this.Count.HeaderText = "Количество";
-            this.Count.Name = "Count";
-            // 
-            // Sum
-            // 
-            this.Sum.HeaderText = "Сумма";
-            this.Sum.Name = "Sum";
-            // 
-            // Status
-            // 
-            this.Status.HeaderText = "Статус";
-            this.Status.Name = "Status";
-            // 
-            // DateCreate
-            // 
-            this.DateCreate.HeaderText = "Дата создания";
-            this.DateCreate.Name = "DateCreate";
-            // 
-            // DateEnd
-            // 
-            this.DateEnd.HeaderText = "Дата завершения";
-            this.DateEnd.Name = "DateEnd";
             // 
             // FormMain
             // 
@@ -229,13 +170,5 @@
         private System.Windows.Forms.Button buttonPayOrder;
         private System.Windows.Forms.Button buttonRef;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CannedID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Canned;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateCreate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateEnd;
     }
 }

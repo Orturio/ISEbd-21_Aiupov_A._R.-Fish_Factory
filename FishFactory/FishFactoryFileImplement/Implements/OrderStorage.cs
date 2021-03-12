@@ -87,10 +87,7 @@ namespace FishFactoryFileImplement.Implements
         }
 
         private OrderViewModel CreateModel(Order order)
-        {
-
-            Canned canned = source.Canneds.FirstOrDefault(x => x.Id == order.CannedId);            
-
+        {       
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -100,7 +97,7 @@ namespace FishFactoryFileImplement.Implements
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                CannedName = canned.CannedName
+                CannedName = source.Canneds.FirstOrDefault(x => x.Id == order.CannedId)?.CannedName
             };
         }
     }
