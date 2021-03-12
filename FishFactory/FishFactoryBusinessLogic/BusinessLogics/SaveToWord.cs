@@ -85,13 +85,14 @@ WordTextProperties {Bold = true, Size = "24", } ) },
                             JustificationValues = JustificationValues.Both
                         }     
                     }));;
+
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
                         Texts = new List<(string, WordTextProperties)> {
 ("Цена: " + canned.Price.ToString(), new WordTextProperties {Bold = false, Size = "24", }) },
                         TextProperties = new WordTextProperties
                         {
-                            Size = "24",
+                            Size = "18",
                             JustificationValues = JustificationValues.Both
                         }
                     })); ;

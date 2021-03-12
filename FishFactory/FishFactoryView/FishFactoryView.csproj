@@ -256,6 +256,12 @@
     <Compile Include="FormReportCannedComponents.Designer.cs">
       <DependentUpon>FormReportCannedComponents.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportCannedInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportCannedInfo.Designer.cs">
+      <DependentUpon>FormReportCannedInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportOrders.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportCannedComponents.resx">
       <DependentUpon>FormReportCannedComponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportCannedInfo.resx">
+      <DependentUpon>FormReportCannedInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportOrders.resx">
       <DependentUpon>FormReportOrders.cs</DependentUpon>

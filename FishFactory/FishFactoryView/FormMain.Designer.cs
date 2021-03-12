@@ -36,13 +36,14 @@
             this.списокКомпонентовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.компонентыПоИзделиямToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.списокИзделийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonCreateOrder = new System.Windows.Forms.Button();
             this.buttonTakeOrderInWork = new System.Windows.Forms.Button();
             this.buttonOrderReady = new System.Windows.Forms.Button();
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.списокИзделийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.изделияПоКомпонентамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -87,7 +88,8 @@
             this.списокКомпонентовToolStripMenuItem,
             this.компонентыПоИзделиямToolStripMenuItem,
             this.списокЗаказовToolStripMenuItem,
-            this.списокИзделийToolStripMenuItem});
+            this.списокИзделийToolStripMenuItem,
+            this.изделияПоКомпонентамToolStripMenuItem});
             this.отчётыToolStripMenuItem.Name = "отчётыToolStripMenuItem";
             this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчётыToolStripMenuItem.Text = "Отчеты";
@@ -112,6 +114,13 @@
             this.списокЗаказовToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.списокЗаказовToolStripMenuItem.Text = "Список заказов";
             this.списокЗаказовToolStripMenuItem.Click += new System.EventHandler(this.OrdersToolStripMenuItem_Click);
+            // 
+            // списокИзделийToolStripMenuItem
+            // 
+            this.списокИзделийToolStripMenuItem.Name = "списокИзделийToolStripMenuItem";
+            this.списокИзделийToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.списокИзделийToolStripMenuItem.Text = "Список изделий";
+            this.списокИзделийToolStripMenuItem.Click += new System.EventHandler(this.CannedsToolStripMenuItem_Click);
             // 
             // buttonCreateOrder
             // 
@@ -172,12 +181,12 @@
             this.dataGridView.Size = new System.Drawing.Size(628, 421);
             this.dataGridView.TabIndex = 12;
             // 
-            // списокИзделийToolStripMenuItem
+            // изделияПоКомпонентамToolStripMenuItem
             // 
-            this.списокИзделийToolStripMenuItem.Name = "списокИзделийToolStripMenuItem";
-            this.списокИзделийToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.списокИзделийToolStripMenuItem.Text = "Список изделий";
-            this.списокИзделийToolStripMenuItem.Click += new System.EventHandler(this.CannedsToolStripMenuItem_Click);
+            this.изделияПоКомпонентамToolStripMenuItem.Name = "изделияПоКомпонентамToolStripMenuItem";
+            this.изделияПоКомпонентамToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.изделияПоКомпонентамToolStripMenuItem.Text = "Изделия по компонентам";
+            this.изделияПоКомпонентамToolStripMenuItem.Click += new System.EventHandler(this.изделияПоКомпонентамToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -220,5 +229,6 @@
         private System.Windows.Forms.ToolStripMenuItem компонентыПоИзделиямToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗаказовToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокИзделийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem изделияПоКомпонентамToolStripMenuItem;
     }
 }

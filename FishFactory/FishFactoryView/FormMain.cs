@@ -162,6 +162,12 @@ MessageBoxIcon.Error);
             form.ShowDialog();
         }
 
+        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportCannedInfo>();
+            form.ShowDialog();
+        }
+
         private void ButtonRef_Click(object sender, EventArgs e)
         {
             LoadData();
