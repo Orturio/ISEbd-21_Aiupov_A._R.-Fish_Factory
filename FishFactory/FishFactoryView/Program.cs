@@ -1,5 +1,6 @@
 ﻿using FishFactoryBusinessLogic.BusinessLogics;
 using FishFactoryBusinessLogic.Interfaces;
+using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryDatabaseImplement.Implements;
 using System;
 using System.Windows.Forms;
@@ -30,9 +31,12 @@ namespace FishFactoryView
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<ICannedStorage, CannedStorage>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IClientStorage, ClientStorage>(new
+           HierarchicalLifetimeManager());
             currentContainer.RegisterType<ComponentLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ClientLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<CannedLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<ReportLogic>(new

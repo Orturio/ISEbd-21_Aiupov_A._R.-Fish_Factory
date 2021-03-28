@@ -15,6 +15,7 @@ namespace FishFactoryDatabaseImplement
         }
         public virtual DbSet<Component> Components { set; get; }
         public virtual DbSet<Canned> Canneds { set; get; }
+        public virtual DbSet<Client> Clients { set; get; }
         public virtual DbSet<CannedComponent> CannedComponents { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
     }

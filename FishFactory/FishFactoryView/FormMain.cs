@@ -1,8 +1,10 @@
 ﻿using FishFactoryBusinessLogic.BindingModels;
 using FishFactoryBusinessLogic.BusinessLogics;
 using System;
+using FishFactoryBusinessLogic.ViewModels;
 using System.Windows.Forms;
 using Unity;
+using System.Collections.Generic;
 
 namespace FishFactoryView
 {
@@ -13,12 +15,14 @@ namespace FishFactoryView
 
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _reportLogic;
+        private readonly ClientLogic _clientLogic;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._reportLogic = reportLogic;
+            this._clientLogic = clientLogic;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -30,13 +34,15 @@ namespace FishFactoryView
         {
             try
             {
-                var list = _orderLogic.Read(null);
+                
+                var list = _orderLogic.Read(null);                
+
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[2].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -118,22 +124,6 @@ MessageBoxIcon.Error);
             }
         }
 
-        private void ComponentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    _reportLogic.SaveComponentsToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
-                }
-            }
-        }
-
         private void CannedsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
@@ -148,12 +138,6 @@ MessageBoxIcon.Error);
                    MessageBoxIcon.Information);
                 }
             }
-        }
-
-        private void ComponentCannedsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportCannedComponents>();
-            form.ShowDialog();
         }
 
         private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,6 +155,12 @@ MessageBoxIcon.Error);
         private void ButtonRef_Click(object sender, EventArgs e)
         {
             LoadData();
+        }
+
+        private void клиентыToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
+            form.ShowDialog();
         }
     }
 }

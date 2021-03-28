@@ -16,24 +16,36 @@ namespace FishFactoryView
 
         private readonly OrderLogic _logicO;
 
-        public FormCreateOrder(CannedLogic logicP, OrderLogic logicO)
+        private readonly ClientLogic _logicC;
+
+        public FormCreateOrder(CannedLogic logicP, OrderLogic logicO, ClientLogic logicC)
         {
             InitializeComponent();
             _logicP = logicP;
             _logicO = logicO;
+            _logicC = logicC;
         }
 
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                var list = _logicP.Read(null);
-                foreach (var item in list)
+                var listCanneds = _logicP.Read(null);
+                foreach (var item in listCanneds)
                 {
                     comboBoxCanned.DisplayMember = "CannedName";
                     comboBoxCanned.ValueMember = "Id";
-                    comboBoxCanned.DataSource = list;
+                    comboBoxCanned.DataSource = listCanneds;
                     comboBoxCanned.SelectedItem = null;
+                }
+
+                var listClients = _logicC.Read(null);
+                foreach (var component in listClients)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listClients;
+                    comboBoxClient.SelectedItem = null;
                 }
             }
             catch (Exception ex)
@@ -90,15 +102,23 @@ MessageBoxIcon.Error);
                 return;
             }
 
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     CannedId = Convert.ToInt32(comboBoxCanned.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-
+              
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;

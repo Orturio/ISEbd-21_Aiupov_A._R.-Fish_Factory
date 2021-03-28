@@ -4,6 +4,7 @@ using FishFactoryBusinessLogic.Interfaces;
 using FishFactoryBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
+using FishFactoryBusinessLogic.Enums;
 using System.Linq;
 
 namespace FishFactoryBusinessLogic.BusinessLogics
@@ -25,37 +26,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// Получение списка компонент с указанием, в каких изделиях используются
         /// </summary>
         /// <returns></returns>
-        public List<ReportCannedComponentViewModel> GetCannedComponent()
-        {
-            var components = _componentStorage.GetFullList();
-
-            var canneds = _cannedStorage.GetFullList();
-
-            var list = new List<ReportCannedComponentViewModel>();
-
-            foreach (var component in components)
-            {
-                var record = new ReportCannedComponentViewModel
-                {
-                    ComponentName = component.ComponentName,
-                    Canneds = new List<Tuple<string, int>>(),
-                    TotalCount = 0
-                };
-
-                foreach (var canned in canneds)
-                {
-                    if (canned.CannedComponents.ContainsKey(component.Id))
-                    {
-                        record.Canneds.Add(new Tuple<string, int>(canned.CannedName,
-                       canned.CannedComponents[component.Id].Item2));
-                        record.TotalCount +=
-                       canned.CannedComponents[component.Id].Item2;
-                    }
-                }
-                list.Add(record);
-            }
-            return list;
-        }
 
         public List<ReportCannedComponentViewModel> GetComponentCanned()
         {
@@ -93,7 +63,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         {
             return _orderStorage.GetFilteredList(new OrderBindingModel
             {
-                DateFrom =model.DateFrom,
+                DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             }).Select(x => new ReportOrdersViewModel
             {
@@ -101,7 +71,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 CannedName = x.CannedName,
                 Count = x.Count,
                 Sum = x.Sum,
-                Status = x.Status
+                Status = ((OrderStatus)Enum.Parse(typeof(OrderStatus), x.Status.ToString())).ToString(),
             }).ToList();
         }
 
@@ -109,15 +79,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        public void SaveComponentsToWordFile(ReportBindingModel model)
-        {
-            SaveToWord.CreateDoc(new WordInfo
-            {
-                FileName = model.FileName,
-                Title = "Список компонент",
-                Components = _componentStorage.GetFullList()
-            });
-        }
 
         public void SaveCannedsToWordFile(ReportBindingModel model)
         {
@@ -133,15 +94,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
-        public void SaveCannedComponentToExcelFile(ReportBindingModel model)
-        {
-            SaveToExcel.CreateDoc(new ExcelInfo
-            {
-                FileName = model.FileName,
-                Title = "Список компонент",
-                CannedComponents = GetCannedComponent()
-            });
-        }
 
         public void SaveCannedInfoToExcelFile(ReportBindingModel model)
         {
