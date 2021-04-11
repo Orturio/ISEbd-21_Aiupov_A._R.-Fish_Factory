@@ -5,6 +5,7 @@ using FishFactoryDatabaseImplement.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using FishFactoryBusinessLogic.Enums;
 using System.Linq;
 
 namespace FishFactoryDatabaseImplement.Implements
@@ -15,10 +16,9 @@ namespace FishFactoryDatabaseImplement.Implements
         {
             using (var context = new FishFactoryDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Canned).Include(rec => rec.Client).Include(rec => rec.Implementer).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    ClientFIO = context.Clients.FirstOrDefault(r => r.Id == rec.ClientId).ClientFIO,
                     CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
                     CannedId = rec.CannedId,
                     Count = rec.Count,
@@ -26,7 +26,10 @@ namespace FishFactoryDatabaseImplement.Implements
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                    ClientId = rec.ClientId
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.ClientFIO,
+                    ImplementerId = rec.ImplementerId,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty
                 }).ToList();
             }
         }
@@ -40,21 +43,34 @@ namespace FishFactoryDatabaseImplement.Implements
 
             using (var context = new FishFactoryDatabase())
             {
-                return context.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-(model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    ClientFIO = context.Clients.FirstOrDefault(r => r.Id == rec.ClientId).ClientFIO,
-                    CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
-                    CannedId = rec.CannedId,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                    ClientId = rec.ClientId
-                }).ToList();
+                return context.Orders
+                    .Include(rec => rec.Canned)
+                    .Include(rec => rec.Client)
+                    .Include(rec => rec.Implementer)
+                    .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+                    rec.DateCreate.Date == model.DateCreate.Date) ||
+                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <=
+                    model.DateTo.Value.Date) ||
+                    (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                    (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
+                    (model.ImplementerId.HasValue && rec.ImplementerId ==
+                    model.ImplementerId && rec.Status == OrderStatus.Выполняется))
+                    .Select(rec => new OrderViewModel
+                    {
+                        Id = rec.Id,
+                        Count = rec.Count,
+                        DateCreate = rec.DateCreate,
+                        DateImplement = rec.DateImplement,
+                        CannedId = rec.CannedId,
+                        CannedName = rec.Canned.CannedName,
+                        ClientId = rec.ClientId,
+                        ClientFIO = rec.Client.ClientFIO,
+                        ImplementerId = rec.ImplementerId,
+                        ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty,
+                        Status = rec.Status,
+                        Sum = rec.Sum
+                    }).ToList();
             }
         }
 
@@ -67,12 +83,11 @@ namespace FishFactoryDatabaseImplement.Implements
 
             using (var context = new FishFactoryDatabase())
             {
-                var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                var order = context.Orders.Include(rec => rec.Canned).Include(rec => rec.Client).Include(rec => rec.Implementer).FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
-                    ClientFIO = context.Clients.FirstOrDefault(r => r.Id == order.ClientId).ClientFIO,
                     CannedName = context.Canneds.FirstOrDefault(r => r.Id == order.CannedId).CannedName,
                     CannedId = order.CannedId,
                     Count = order.Count,
@@ -80,7 +95,10 @@ namespace FishFactoryDatabaseImplement.Implements
                     Status = order.Status,
                     DateCreate = order.DateCreate,
                     DateImplement = order.DateImplement,
-                    ClientId = order.ClientId
+                    ClientId = order.ClientId,
+                    ClientFIO = order.Client.ClientFIO,
+                    ImplementerId = order.ImplementerId,
+                    ImplementerFIO = order.ImplementerId.HasValue ? order.Implementer.ImplementerFIO : string.Empty
                 } : null;
             }
         }
@@ -157,7 +175,8 @@ namespace FishFactoryDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
-            order.ClientId = (int) model.ClientId;
+            order.ClientId = model.ClientId.Value;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
     }

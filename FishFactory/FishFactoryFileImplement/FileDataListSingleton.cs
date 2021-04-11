@@ -21,6 +21,8 @@ namespace FishFactoryFileImplement
 
         private readonly string CannedFileName = "Canned.xml";
 
+        private readonly string ImplementerFileName = "Implementer.xml";
+
         public List<Component> Components { get; set; }
 
         public List<Order> Orders { get; set; }
@@ -29,12 +31,15 @@ namespace FishFactoryFileImplement
 
         public List<Client> Clients { get; set; }
 
+        public List<Implementer> Implementers { get; set; }
+
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Canneds = LoadCanneds();
             Clients = LoadClients();
+            Implementers = LoadImplementers();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -52,6 +57,7 @@ namespace FishFactoryFileImplement
             SaveOrders();
             SaveCanneds();
             SaveClients();
+            SaveImplementers();
         }
 
         private List<Component> LoadComponents()
@@ -97,6 +103,7 @@ namespace FishFactoryFileImplement
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
                         ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                         CannedId = Convert.ToInt32(elem.Element("CannedId").Value),
+                        ImplementerId = Convert.ToInt32(elem.Element("ImplementerId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
@@ -160,6 +167,27 @@ Convert.ToInt32(component.Element("Value").Value));
             return list;
         }
 
+        private List<Implementer> LoadImplementers()
+        {
+            var list = new List<Implementer>();
+            if (File.Exists(ImplementerFileName))
+            {
+                XDocument xDocument = XDocument.Load(ImplementerFileName);
+                var xElements = xDocument.Root.Elements("Implementer").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Implementer
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ImplementerFIO = elem.Element("ImplementerFIO").Value,
+                        WorkingTime = Convert.ToInt32(elem.Element("WorkingTime").Value),
+                        PauseTime = Convert.ToInt32(elem.Element("PauseTime").Value),
+                    });
+                }
+            }
+            return list;
+        }
+
         private void SaveComponents()
         {
             if (Components != null)
@@ -189,6 +217,7 @@ Convert.ToInt32(component.Element("Value").Value));
                     new XAttribute("Id", order.Id),
                     new XElement("ClientId", order.ClientId),
                     new XElement("CannedId", order.CannedId),
+                    new XElement("ImplementerId", order.ImplementerId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
                     new XElement("Status", order.Status),
@@ -244,6 +273,24 @@ Convert.ToInt32(component.Element("Value").Value));
 
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(CannedFileName);
+            }
+        }
+
+        private void SaveImplementers()
+        {
+            if (Implementers != null)
+            {
+                var xElement = new XElement("Implementers");
+                foreach (var implementer in Implementers)
+                {
+                    xElement.Add(new XElement("Implementer",
+                    new XAttribute("Id", implementer.Id),
+                    new XElement("ImplementerFIO", implementer.ImplementerFIO),
+                    new XElement("WorkingTime", implementer.WorkingTime),
+                    new XElement("PauseTime", implementer.PauseTime)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ImplementerFileName);
             }
         }
     }

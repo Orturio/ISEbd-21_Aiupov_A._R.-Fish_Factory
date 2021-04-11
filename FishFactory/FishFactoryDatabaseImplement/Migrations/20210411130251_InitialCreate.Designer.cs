@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishFactoryDatabaseImplement.Migrations
 {
     [DbContext(typeof(FishFactoryDatabase))]
-    [Migration("20210226125334_InitialCreate")]
+    [Migration("20210411130251_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,30 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.ToTable("CannedComponents");
                 });
 
+            modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Component", b =>
                 {
                     b.Property<int>("Id")
@@ -81,6 +105,28 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.ToTable("Components");
                 });
 
+            modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -89,6 +135,9 @@ namespace FishFactoryDatabaseImplement.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CannedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("Count")
@@ -100,6 +149,9 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -109,6 +161,10 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CannedId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.ToTable("Orders");
                 });
@@ -130,11 +186,21 @@ namespace FishFactoryDatabaseImplement.Migrations
 
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("FishFactoryDatabaseImplement.Models.Canned", null)
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Canned", "Canned")
                         .WithMany("Order")
                         .HasForeignKey("CannedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Order")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Order")
+                        .HasForeignKey("ImplementerId");
                 });
 #pragma warning restore 612, 618
         }

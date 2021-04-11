@@ -103,6 +103,28 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.ToTable("Components");
                 });
 
+            modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +147,9 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -136,6 +161,8 @@ namespace FishFactoryDatabaseImplement.Migrations
                     b.HasIndex("CannedId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.ToTable("Orders");
                 });
@@ -163,11 +190,15 @@ namespace FishFactoryDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FishFactoryDatabaseImplement.Models.Client", null)
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Client", "Client")
                         .WithMany("Order")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Order")
+                        .HasForeignKey("ImplementerId");
                 });
 #pragma warning restore 612, 618
         }

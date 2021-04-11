@@ -33,6 +33,8 @@ namespace FishFactoryView
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IClientStorage, ClientStorage>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IImplementerStorage, ImplementerStorage>(new
+            HierarchicalLifetimeManager());
             currentContainer.RegisterType<ComponentLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
@@ -40,6 +42,8 @@ namespace FishFactoryView
             currentContainer.RegisterType<CannedLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<ReportLogic>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ImplementerLogic>(new
            HierarchicalLifetimeManager());
             return currentContainer;
         }
