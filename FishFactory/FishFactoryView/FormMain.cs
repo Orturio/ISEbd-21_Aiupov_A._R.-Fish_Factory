@@ -116,23 +116,7 @@ MessageBoxIcon.Error);
 MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private void ComponentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    _reportLogic.SaveComponentsToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
-                }
-            }
-        }
+        }  
 
         private void CannedsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -148,12 +132,6 @@ MessageBoxIcon.Error);
                    MessageBoxIcon.Information);
                 }
             }
-        }
-
-        private void ComponentCannedsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportCannedComponents>();
-            form.ShowDialog();
         }
 
         private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)

@@ -15,7 +15,7 @@ namespace FishFactoryDatabaseImplement.Implements
         {
             using (var context = new FishFactoryDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Canned).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
@@ -40,7 +40,7 @@ namespace FishFactoryDatabaseImplement.Implements
             {
                 using (var context = new FishFactoryDatabase())
                 {
-                    return context.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateImplement <= model.DateTo).Select(rec => new OrderViewModel
+                    return context.Orders.Include(rec => rec.Canned).Where(rec => rec.DateCreate >= model.DateFrom && rec.DateImplement <= model.DateTo).Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,
                         CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
@@ -56,7 +56,7 @@ namespace FishFactoryDatabaseImplement.Implements
 
             using (var context = new FishFactoryDatabase())
             {
-                return context.Orders.Where(rec => rec.Id.Equals(model.Id)).Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Canned).Where(rec => rec.Id.Equals(model.Id)).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
@@ -79,7 +79,7 @@ namespace FishFactoryDatabaseImplement.Implements
 
             using (var context = new FishFactoryDatabase())
             {
-                var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                var order = context.Orders.Include(rec => rec.Canned).FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {

@@ -2,6 +2,7 @@
 using FishFactoryBusinessLogic.HelperModels;
 using FishFactoryBusinessLogic.Interfaces;
 using FishFactoryBusinessLogic.ViewModels;
+using FishFactoryBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,39 +28,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportCannedComponentViewModel> GetCannedComponent()
         {
-            var components = _componentStorage.GetFullList();
-
-            var canneds = _cannedStorage.GetFullList();
-
-            var list = new List<ReportCannedComponentViewModel>();
-
-            foreach (var component in components)
-            {
-                var record = new ReportCannedComponentViewModel
-                {
-                    ComponentName = component.ComponentName,
-                    Canneds = new List<Tuple<string, int>>(),
-                    TotalCount = 0
-                };
-
-                foreach (var canned in canneds)
-                {
-                    if (canned.CannedComponents.ContainsKey(component.Id))
-                    {
-                        record.Canneds.Add(new Tuple<string, int>(canned.CannedName,
-                       canned.CannedComponents[component.Id].Item2));
-                        record.TotalCount +=
-                       canned.CannedComponents[component.Id].Item2;
-                    }
-                }
-                list.Add(record);
-            }
-            return list;
-        }
-
-        public List<ReportCannedComponentViewModel> GetComponentCanned()
-        {
-            var components = _componentStorage.GetFullList();
             var canneds = _cannedStorage.GetFullList();
             var list = new List<ReportCannedComponentViewModel>();
             foreach (var canned in canneds)
@@ -70,19 +38,15 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                     Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var component in components)
+                foreach (var component in canned.CannedComponents)
                 {
-                    if (canned.CannedComponents.ContainsKey(component.Id))
-                    {
-                        record.Components.Add(new Tuple<string, int>(component.ComponentName,
-                        canned.CannedComponents[component.Id].Item2));
-                        record.TotalCount += canned.CannedComponents[component.Id].Item2;
-                    }
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
             }
             return list;
-        }
+        } 
 
         /// <summary>
         /// Получение списка заказов за определенный период
@@ -101,22 +65,8 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 CannedName = x.CannedName,
                 Count = x.Count,
                 Sum = x.Sum,
-                Status = x.Status
+                Status = ((OrderStatus)Enum.Parse(typeof(OrderStatus), x.Status.ToString())).ToString()
             }).ToList();
-        }
-
-        /// <summary>
-        /// Сохранение компонент в файл-Word
-        /// </summary>
-        /// <param name="model"></param>
-        public void SaveComponentsToWordFile(ReportBindingModel model)
-        {
-            SaveToWord.CreateDoc(new WordInfo
-            {
-                FileName = model.FileName,
-                Title = "Список компонент",
-                Components = _componentStorage.GetFullList()
-            });
         }
 
         public void SaveCannedsToWordFile(ReportBindingModel model)
@@ -130,26 +80,16 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         }
 
         /// <summary>
-        /// Сохранение компонент с указаеним продуктов в файл-Excel
+        /// Сохранение изделие с указаеним продуктов в файл-Excel
         /// </summary>
-        /// <param name="model"></param>
-        public void SaveCannedComponentToExcelFile(ReportBindingModel model)
-        {
-            SaveToExcel.CreateDoc(new ExcelInfo
-            {
-                FileName = model.FileName,
-                Title = "Список компонент",
-                CannedComponents = GetCannedComponent()
-            });
-        }
-
-        public void SaveCannedInfoToExcelFile(ReportBindingModel model)
+        /// <param name="model"></param>       
+        public void SaveCannedToExcelFile(ReportBindingModel model)
         {
             SaveToExcel.CreateDocCanned(new ExcelInfo
             {
                 FileName = model.FileName,
                 Title = "Список изделий",
-                CannedComponents = GetComponentCanned()
+                CannedComponents = GetCannedComponent()
             });
         }
 
