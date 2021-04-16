@@ -86,6 +86,8 @@ namespace FishFactoryView
                 MessageBoxIcon.Error);
                 return;
             }
+
+            logic.Restocking(new WarehouseBindingModel { }, WarehouseId, ComponentId, Count, ComponentName);
             DialogResult = DialogResult.OK;
             Close();
         }
