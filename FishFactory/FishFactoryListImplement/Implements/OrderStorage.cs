@@ -36,21 +36,15 @@ namespace FishFactoryListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.CannedId.ToString().Contains(model.CannedId.ToString()))
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+                    order.DateCreate.Date == model.DateCreate.Date) ||
+                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <=
+                    model.DateTo.Value.Date))
                 {
                     result.Add(CreateModel(order));
                 }
             }
-
-            List<OrderViewModel> resultRep = new List<OrderViewModel>();
-            foreach (var order in source.Orders)
-            {
-                if (order.DateCreate >= model.DateFrom && order.DateImplement <= model.DateTo)
-                {
-                    resultRep.Add(CreateModel(order));
-                }
-            }
-
             return result;
         }
 
