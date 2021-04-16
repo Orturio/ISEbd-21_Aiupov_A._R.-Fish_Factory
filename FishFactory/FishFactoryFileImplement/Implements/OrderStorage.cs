@@ -100,7 +100,7 @@ namespace FishFactoryFileImplement.Implements
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                CannedName = canned.CannedName
+                CannedName = canned?.CannedName
             };
         }
     }
