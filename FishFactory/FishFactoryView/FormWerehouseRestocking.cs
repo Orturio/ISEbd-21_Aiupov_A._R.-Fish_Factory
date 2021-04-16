@@ -14,7 +14,7 @@ namespace FishFactoryView
 {
     public partial class FormWarehouseRestocking : Form
     {
-        WarehouseLogic logic;
+        WarehouseStorage _warehouseStorage = new WarehouseStorage();
 
         WarehouseStorage _warehouseStorage = new WarehouseStorage();
 
@@ -46,7 +46,6 @@ namespace FishFactoryView
         public FormWarehouseRestocking(ComponentLogic componentlogic, WarehouseLogic warehouseLogic)
         {
             InitializeComponent();
-            logic = warehouseLogic;
             List<ComponentViewModel> listComponent = componentlogic.Read(null);
             if (listComponent != null)
             {
