@@ -36,12 +36,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
 
         public void CreateOrder(CreateOrderBindingModel model)
         {
-
-            if (!_warehouseStorage.Unrestocking(model.Count, model.CannedId))
-            {
-                throw new Exception("Компонентов недостаточно");
-            }
-
             _orderStorage.Insert(new OrderBindingModel
             {
                 CannedId = model.CannedId,
@@ -64,6 +58,10 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             if (order.Status != OrderStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
+            }
+            if (!_warehouseStorage.Unrestocking(order.Count, order.CannedId))
+            {
+                throw new Exception("Компонентов не достаточно");
             }
 
             _orderStorage.Update(new OrderBindingModel

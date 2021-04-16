@@ -75,39 +75,14 @@ namespace FishFactoryFileImplement.Implements
             }
         }
 
-        public void Restocking(WarehouseBindingModel model, int WarehouseId, int ComponentId, int Count, string ComponentName)
-        {
-            WarehouseViewModel view = GetElement( new WarehouseBindingModel
-            {
-                Id = WarehouseId
-            });
-
-            if (view != null)
-            {
-                model.WarehouseComponents = view.WarehouseComponents;
-                model.DateCreate = view.DateCreate;
-                model.Id = view.Id;
-                model.Responsible = view.Responsible;
-                model.WarehouseName = view.WarehouseName;
-            }
-
-            if (model.WarehouseComponents.ContainsKey(ComponentId))
-            {
-                int count = model.WarehouseComponents[ComponentId].Item2;
-                model.WarehouseComponents[ComponentId] = (ComponentName, count + Count);
-            }
-            else
-            {
-                model.WarehouseComponents.Add(ComponentId, (ComponentName, Count));
-            }
-            Update(model);
-        } 
-
         public bool Unrestocking(int CannedCount, int CannedId)
         {
             var list = GetFullList();
+
             var DCount = source.Canneds.FirstOrDefault(rec => rec.Id == CannedId).CannedComponents;
+
             DCount = DCount.ToDictionary(rec => rec.Key, rec => rec.Value * CannedCount);
+
             Dictionary<int, int> Have = new Dictionary<int, int>();
 
             foreach (var view in list)
@@ -158,9 +133,9 @@ namespace FishFactoryFileImplement.Implements
                         Update(new WarehouseBindingModel
                         {
                             Id = view.Id,
-                            DateCreate = view.DateCreate,
-                            Responsible = view.Responsible,
                             WarehouseName = view.WarehouseName,
+                            Responsible = view.Responsible,
+                            DateCreate = view.DateCreate,
                             WarehouseComponents = warehouseComponents
                         });
                     }
