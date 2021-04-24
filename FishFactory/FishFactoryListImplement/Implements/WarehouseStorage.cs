@@ -131,6 +131,12 @@ namespace FishFactoryListImplement.Implements
             }
             return warehouse;
         }
+
+        public bool Unrestocking(int Count, int CannedId)
+        {
+            return true;
+        }
+
         private WarehouseViewModel CreateModel(Warehouse warehouse)
         {
             Dictionary<int, (string, int)> warehouseComponents = new
