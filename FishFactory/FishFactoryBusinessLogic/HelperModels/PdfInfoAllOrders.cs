@@ -1,16 +1,15 @@
 ﻿using FishFactoryBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace FishFactoryBusinessLogic.HelperModels
 {
-    class ExcelInfo
+    public class PdfInfoAllOrders
     {
         public string FileName { get; set; }
 
         public string Title { get; set; }
 
-        public List<ReportCannedComponentViewModel> CannedComponents { get; set; }
-
-        public List<ReportComponentWarehouseViewModel> ComponentWarehouses { get; set; }
+        public List<ReportAllOrdersViewModel> Orders { get; set; }
     }
 }
