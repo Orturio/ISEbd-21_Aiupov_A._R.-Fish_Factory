@@ -20,5 +20,7 @@ namespace FishFactoryDatabaseImplement
         public virtual DbSet<Order> Orders { set; get; }
 
         public virtual DbSet<Implementer> Implementers { set; get; }
+
+        public virtual DbSet<MessageInfo> MessageInfoes { set; get; }
     }
 }

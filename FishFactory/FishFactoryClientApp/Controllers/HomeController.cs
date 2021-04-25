@@ -131,12 +131,21 @@ namespace FishFactoryClientApp.Controllers
 
             APIClient.PostRequest("api/main/createorder", new CreateOrderBindingModel
             {
-                ClientId = (int)Program.Client.Id,
+                ClientId = Program.Client.Id.Value,
                 CannedId = canned,
                 Count = count,
                 Sum = sum
             });
             Response.Redirect("Index");
+        }
+
+        public IActionResult Mails()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetMessages?clientId={Program.Client.Id}"));
         }
 
         [HttpPost]

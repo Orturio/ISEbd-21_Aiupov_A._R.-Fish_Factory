@@ -34,6 +34,6 @@ namespace FishFactoryRestApi.Controllers
         public List<OrderViewModel> GetOrders(int clientId) => _order.Read(new OrderBindingModel { ClientId = clientId });
 
         [HttpPost]
-        public void CreateOrder(CreateOrderBindingModel model) => _main.CreateOrder(model);
+        public void CreateOrder(CreateOrderBindingModel model) => _order.CreateOrder(model);
     }
 }

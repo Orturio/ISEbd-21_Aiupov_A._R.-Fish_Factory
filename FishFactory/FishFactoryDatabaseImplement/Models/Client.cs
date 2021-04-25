@@ -19,5 +19,8 @@ namespace FishFactoryDatabaseImplement.Models
 
         [ForeignKey("ClientId")]
         public List<Order> Order { get; set; }
+
+        [ForeignKey("ClientId")]
+        public List<MessageInfo> MessageInfo { get; set; }
     }
 }
