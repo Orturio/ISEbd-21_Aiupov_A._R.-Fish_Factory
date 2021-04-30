@@ -40,7 +40,7 @@ namespace FishFactoryDatabaseImplement.Implements
                    Id = rec.Id,
                    CannedName = rec.CannedName,
                    Price = rec.Price,
-                  
+                   CannedComponents = rec.CannedComponents.ToDictionary(recPC => recPC.ComponentId, recPC => (recPC.Component?.ComponentName, recPC.Count))
                 }).ToList();
             }
         }

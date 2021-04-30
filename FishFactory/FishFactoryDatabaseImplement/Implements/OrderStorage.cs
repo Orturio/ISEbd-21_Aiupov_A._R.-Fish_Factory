@@ -16,6 +16,7 @@ namespace FishFactoryDatabaseImplement.Implements
         {
             using (var context = new FishFactoryDatabase())
             {
+
                 return context.Orders.Include(rec => rec.Canned).Include(rec => rec.Client).Include(rec => rec.Implementer).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
