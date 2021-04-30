@@ -11,10 +11,12 @@ namespace FishFactoryListImplement.Implements
     public class WarehouseStorage : IWarehouseStorage
     {
         private readonly DataListSingleton source;
+
         public WarehouseStorage()
         {
             source = DataListSingleton.GetInstance();
         }
+
         public List<WarehouseViewModel> GetFullList()
         {
             List<WarehouseViewModel> result = new List<WarehouseViewModel>();
@@ -24,6 +26,7 @@ namespace FishFactoryListImplement.Implements
             }
             return result;
         }
+
         public List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model)
         {
             if (model == null)
@@ -40,6 +43,7 @@ namespace FishFactoryListImplement.Implements
             }
             return result;
         }
+
         public WarehouseViewModel GetElement(WarehouseBindingModel model)
         {
             if (model == null)
@@ -89,6 +93,7 @@ namespace FishFactoryListImplement.Implements
 
             CreateModel(model, tempWarehouse);
         }
+
         public void Delete(WarehouseBindingModel model)
         {
             for (int i = 0; i < source.Warehouses.Count; ++i)
@@ -134,7 +139,7 @@ namespace FishFactoryListImplement.Implements
 
         public bool Unrestocking(int Count, int CannedId)
         {
-            return true;
+            throw new NotImplementedException();;
         }
 
         private WarehouseViewModel CreateModel(Warehouse warehouse)
@@ -154,6 +159,7 @@ namespace FishFactoryListImplement.Implements
                 }
                 warehouseComponents.Add(pc.Key, (componentName, pc.Value));
             }
+
             return new WarehouseViewModel
             {
                 Id = warehouse.Id,

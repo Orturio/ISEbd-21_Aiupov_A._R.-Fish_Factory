@@ -292,6 +292,10 @@
       <Project>{68e46407-29ee-48e0-a9a5-72eb845cada5}</Project>
       <Name>FishFactoryDatabaseImplement</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FishFactoryListImplement\FishFactoryListImplement.csproj">
+      <Project>{5c5402e0-adfa-42d8-86c7-066bbd3d8509}</Project>
+      <Name>FishFactoryListImplement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
