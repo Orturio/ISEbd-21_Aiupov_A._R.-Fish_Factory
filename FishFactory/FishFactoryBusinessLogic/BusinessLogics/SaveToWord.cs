@@ -13,6 +13,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         /// </summary>
         /// <param name="info"></param>
 
+
         public static void CreateDocCanned(WordInfo info)
         {
             using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(info.FileName, WordprocessingDocumentType.Document))
@@ -39,6 +40,7 @@ WordTextProperties {Bold = true, Size = "24", } ) },
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
                         Texts = new List<(string, WordTextProperties)> {
+
 ("Название: " + canned.CannedName +  ": ", new WordTextProperties {Bold = true, Size = "24", }), (canned.Price.ToString(), new WordTextProperties {Bold = false, Size = "24", }) },
                         TextProperties = new WordTextProperties
                         {
