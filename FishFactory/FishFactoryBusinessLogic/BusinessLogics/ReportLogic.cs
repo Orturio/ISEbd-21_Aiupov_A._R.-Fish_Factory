@@ -5,6 +5,7 @@ using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
+using FishFactoryBusinessLogic.Enums;
 using System.Linq;
 
 namespace FishFactoryBusinessLogic.BusinessLogics
@@ -81,7 +82,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         {
             return _orderStorage.GetFilteredList(new OrderBindingModel
             {
-                DateFrom =model.DateFrom,
+                DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             }).Select(x => new ReportOrdersViewModel
             {

@@ -33,19 +33,11 @@ namespace FishFactoryListImplement.Implements
                 return null;
             }
 
-            List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var order in source.Orders)
-            {
-                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue &&
-                    order.DateCreate.Date == model.DateCreate.Date) ||
-                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                    order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <=
-                    model.DateTo.Value.Date))
-                {
-                    result.Add(CreateModel(order));
-                }
-            }
-            return result;
+
+
+            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date>= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+(model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -111,6 +103,7 @@ namespace FishFactoryListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.CannedId = model.CannedId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -133,6 +126,7 @@ namespace FishFactoryListImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 CannedId = order.CannedId,
                 Count = order.Count,
                 Sum = order.Sum,

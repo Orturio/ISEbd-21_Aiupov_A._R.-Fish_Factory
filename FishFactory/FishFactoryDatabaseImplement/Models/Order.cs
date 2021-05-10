@@ -10,6 +10,8 @@ namespace FishFactoryDatabaseImplement.Models
     {
         public int Id { get; set; }
 
+        public int ClientId { get; set; }
+
         public int CannedId { get; set; }
 
         [Required]

@@ -17,6 +17,8 @@ namespace FishFactoryFileImplement
 
         private readonly string OrderFileName = "Order.xml";
 
+        private readonly string ClientFileName = "Client.xml";
+
         private readonly string CannedFileName = "Canned.xml";
 
         private readonly string WarehouseFileName = "Warehouse.xml";
@@ -27,14 +29,14 @@ namespace FishFactoryFileImplement
 
         public List<Canned> Canneds { get; set; }
 
-        public List<Warehouse> Warehouses { get; set; }
+        public List<Client> Clients { get; set; }
 
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Canneds = LoadCanneds();
-            Warehouses = LoadWarehouses();
+            Clients = LoadClients();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -51,7 +53,7 @@ namespace FishFactoryFileImplement
             SaveComponents();
             SaveOrders();
             SaveCanneds();
-            SaveWarehouses();
+            SaveClients();
         }
 
         private List<Component> LoadComponents()
@@ -95,6 +97,7 @@ namespace FishFactoryFileImplement
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                         CannedId = Convert.ToInt32(elem.Element("CannedId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
@@ -107,32 +110,21 @@ namespace FishFactoryFileImplement
             return list;
         }
 
-        private List<Warehouse> LoadWarehouses()
+        private List<Client> LoadClients()
         {
-            var list = new List<Warehouse>();
-            if (File.Exists(WarehouseFileName))
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
             {
-                XDocument xDocument = XDocument.Load(WarehouseFileName);
-
-                var xElements = xDocument.Root.Elements("Warehouse").ToList();
-
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
                 foreach (var elem in xElements)
                 {
-                    var warhComp = new Dictionary<int, int>();
-                    foreach (var component in
-elem.Element("WarehouseComponents").Elements("WarehouseComponent").ToList())
-                    {
-                        warhComp.Add(Convert.ToInt32(component.Element("Key").Value),
-Convert.ToInt32(component.Element("Value").Value));
-                    }
-
-                    list.Add(new Warehouse
+                    list.Add(new Client
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        WarehouseName = elem.Element("WarehouseName").Value,
-                        Responsible = elem.Element("Responsible").Value,
-                        DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
-                        WarehouseComponents = warhComp
+                        ClientFIO = elem.Element("ClientFIO").Value,
+                        Email = elem.Element("Email").Value,
+                        Password = elem.Element("Password").Value,
                     });
                 }
             }
@@ -197,6 +189,7 @@ Convert.ToInt32(component.Element("Value").Value));
                 {
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
+                    new XElement("ClientId", order.ClientId),
                     new XElement("CannedId", order.CannedId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
@@ -236,6 +229,24 @@ Convert.ToInt32(component.Element("Value").Value));
 
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(WarehouseFileName);
+            }
+        }
+
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("ClientFIO", client.ClientFIO),
+                    new XElement("Email", client.Email),
+                    new XElement("Password", client.Password)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
             }
         }
 

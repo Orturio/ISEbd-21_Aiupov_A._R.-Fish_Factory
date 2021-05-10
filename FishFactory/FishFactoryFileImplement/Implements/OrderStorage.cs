@@ -28,9 +28,9 @@ namespace FishFactoryFileImplement.Implements
             {
                 return null;
             }
-            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
-                .Select(CreateModel).ToList();
+            
+            return source.Orders.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -79,6 +79,7 @@ namespace FishFactoryFileImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order component)
         {
+            component.ClientId = (int)model.ClientId;
             component.CannedId = model.CannedId;
             component.Count = model.Count;
             component.Sum = model.Sum;
@@ -90,12 +91,10 @@ namespace FishFactoryFileImplement.Implements
 
         private OrderViewModel CreateModel(Order order)
         {
-
-            Canned canned = source.Canneds.FirstOrDefault(x => x.Id == order.CannedId);            
-
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 CannedId = order.CannedId,
                 Count = order.Count,
                 Sum = order.Sum,
