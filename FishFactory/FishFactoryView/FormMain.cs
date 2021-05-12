@@ -1,7 +1,8 @@
-﻿using FishFactoryBusinessLogic.BindingModels;
+﻿using Microsoft.Reporting.WebForms;
+using FishFactoryBusinessLogic.BindingModels;
+using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryBusinessLogic.BusinessLogics;
 using System;
-using FishFactoryBusinessLogic.ViewModels;
 using System.Windows.Forms;
 using Unity;
 using System.Collections.Generic;
@@ -14,97 +15,60 @@ namespace FishFactoryView
         public new IUnityContainer Container { get; set; }
 
         private readonly OrderLogic _orderLogic;
-        private readonly ReportLogic _reportLogic;
-        private readonly ClientLogic _clientLogic;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
+        private readonly WorkModeling workModeling;
+
+        private ReportLogic report;
+
+        public FormMain(OrderLogic orderLogic, ReportLogic Report, WorkModeling modeling)
         {
             InitializeComponent();
-            this._orderLogic = orderLogic;
-            this._reportLogic = reportLogic;
-            this._clientLogic = clientLogic;
+            _orderLogic = orderLogic;
+            workModeling = modeling;
+            report = Report;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
             LoadData();
         }
-
         private void LoadData()
         {
             try
             {
-                
-                var list = _orderLogic.Read(null);                
-
+                var list = _orderLogic.Read(null);
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
+                    dataGridView.Columns[3].Visible = false;
                 }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
             }
         }
-
         private void КомпонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormComponents>();
             form.ShowDialog();
         }
-
         private void ИзделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCanneds>();
             form.ShowDialog();
         }
-
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
-        }
-
-        private void ButtonTakeOrderInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel{OrderId = id});
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonOrderReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.FinishOrder(new ChangeStatusBindingModel{OrderId = id});
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-MessageBoxIcon.Error);
-                }
-            }
-        }
+        }      
 
         private void ButtonPayOrder_Click(object sender, EventArgs e)
         {
@@ -119,70 +83,36 @@ MessageBoxIcon.Error);
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-MessageBoxIcon.Error);
-                }
-            }
-        }  
-
-        private void CannedsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    _reportLogic.SaveCannedsToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
+                    MessageBoxIcon.Error);
                 }
             }
         }
-
-        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportOrders>();
-            form.ShowDialog();
-        }
-
-        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportCannedInfo>();
-            form.ShowDialog();
-        }
-
         private void ButtonRef_Click(object sender, EventArgs e)
         {
             LoadData();
         }
-
-        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormWarehouseRestocking>();
-            form.ShowDialog();
-        }
-
         private void складыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormWarehouses>();
             form.ShowDialog();
         }
-
-        private void складыПоКомпонентамToolStripMenuItem_Click_1(object sender, EventArgs e)
-        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormReportComponentWarehouse>();
+            var form = Container.Resolve<FormWarehouseRestocking>();
             form.ShowDialog();
         }
-
-        private void списокСкладовToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+                    report.SaveCannedsToWordFile(new ReportBindingModel
                     {
                         FileName = dialog.FileName
                     });
@@ -191,17 +121,52 @@ MessageBoxIcon.Error);
                 }
             }
         }
-
+        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportCannedInfo>();
+            form.ShowDialog();
+        }
         private void списокВсехЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportAllOrders>();
             form.ShowDialog();
         }
-
+        private void складыПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportComponentWarehouse>();
+            form.ShowDialog();
+        }
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SaveWarehousesToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                }
+            }
+        }
         private void клиентыToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormClients>();
             form.ShowDialog();
+        }
+
+        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            workModeling.DoWork();
+            LoadData();
         }
     }
 }

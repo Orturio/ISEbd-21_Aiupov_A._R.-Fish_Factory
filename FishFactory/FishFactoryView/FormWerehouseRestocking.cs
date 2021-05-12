@@ -16,10 +16,6 @@ namespace FishFactoryView
     {
         WarehouseLogic logic;
 
-        WarehouseStorage _warehouseStorage = new WarehouseStorage();
-
-        WarehouseBindingModel bm = new WarehouseBindingModel();
-
         public string ComponentName { get { return comboBoxComponent.Text; } }
 
         public int ComponentId
@@ -87,9 +83,13 @@ namespace FishFactoryView
                 return;
             }
 
-            logic.Restocking(new WarehouseBindingModel { }, WarehouseId, ComponentId, Count, ComponentName);
-            DialogResult = DialogResult.OK;
-            Close();
+            logic.Restocking(new WarehouseRestokingBindingModel
+            {
+                WarehouseId = WarehouseId,
+                ComponentId = ComponentId,
+                Count = Count
+            });
+            MessageBox.Show("Склад пополнен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)

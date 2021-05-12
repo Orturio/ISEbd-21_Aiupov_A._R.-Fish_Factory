@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishFactoryFileImplement", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishFactoryDatabaseImplement", "FishFactoryDatabaseImplement\FishFactoryDatabaseImplement.csproj", "{68E46407-29EE-48E0-A9A5-72EB845CADA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishFactoryRestApi", "FishFactoryRestApi\FishFactoryRestApi.csproj", "{3027CCAA-239C-4ED0-B970-BE0EDD499BF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishFactoryRestApi", "FishFactoryRestApi\FishFactoryRestApi.csproj", "{3027CCAA-239C-4ED0-B970-BE0EDD499BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishFactoryClientApp", "FishFactoryClientApp\FishFactoryClientApp.csproj", "{9D1DD02A-C229-464B-B65A-15725555FA74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishFactoryClientApp", "FishFactoryClientApp\FishFactoryClientApp.csproj", "{9D1DD02A-C229-464B-B65A-15725555FA74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishFactoryWarehousApp", "FishFactoryWarehousApp\FishFactoryWarehousApp.csproj", "{567A2343-DA60-4145-8C17-ED4ACDAF8C0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{9D1DD02A-C229-464B-B65A-15725555FA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D1DD02A-C229-464B-B65A-15725555FA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D1DD02A-C229-464B-B65A-15725555FA74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567A2343-DA60-4145-8C17-ED4ACDAF8C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567A2343-DA60-4145-8C17-ED4ACDAF8C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567A2343-DA60-4145-8C17-ED4ACDAF8C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567A2343-DA60-4145-8C17-ED4ACDAF8C0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,9 +24,13 @@ namespace FishFactoryRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<ICannedStorage, CannedStorage>();
+            services.AddTransient<IWarehouseStorage, WarehouseStorage>();
+            services.AddTransient<IComponentStorage, ComponentStorage>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
             services.AddTransient<CannedLogic>();
+            services.AddTransient<WarehouseLogic>();
+            services.AddTransient<ComponentLogic>();
             services.AddControllers().AddNewtonsoftJson();
         }
 

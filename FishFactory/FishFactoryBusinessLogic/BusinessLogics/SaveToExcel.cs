@@ -129,7 +129,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         }
 
         private static void CreateWarehouseBody(ExcelInfo info, WorksheetPart worksheetPart, SharedStringTablePart shareStringPart)
-        public static void CreateDocCanned(ExcelInfo info)
         {
             uint rowIndex = 2;
 
@@ -183,6 +182,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 rowIndex++;
             }
         }
+
 
         /// <summary>
         /// Настройка стилей для файла

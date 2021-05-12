@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20210226100032_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20210226125004_add columns name.cs" />
     <Compile Remove="Migrations\20210226125004_add columns name.Designer.cs" />
+    <Compile Remove="Migrations\20210424074945_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210424074945_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20210510084221_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210510084221_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

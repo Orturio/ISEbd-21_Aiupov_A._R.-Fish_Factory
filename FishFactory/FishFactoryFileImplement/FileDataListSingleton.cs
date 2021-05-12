@@ -31,11 +31,14 @@ namespace FishFactoryFileImplement
 
         public List<Client> Clients { get; set; }
 
+        public List<Warehouse> Warehouses { get; set; }
+
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Canneds = LoadCanneds();
+            Warehouses = LoadWarehouses();
             Clients = LoadClients();
         }
 
@@ -53,6 +56,7 @@ namespace FishFactoryFileImplement
             SaveComponents();
             SaveOrders();
             SaveCanneds();
+            SaveWarehouses();
             SaveClients();
         }
 
@@ -231,6 +235,36 @@ Convert.ToInt32(component.Element("Value").Value));
                 xDocument.Save(WarehouseFileName);
             }
         }
+
+        private List<Warehouse> LoadWarehouses()
+        {
+            var list = new List<Warehouse>();
+            if (File.Exists(WarehouseFileName))
+            {
+                XDocument xDocument = XDocument.Load(WarehouseFileName);
+                var xElements = xDocument.Root.Elements("Warehouse").ToList();
+                foreach (var elem in xElements)
+                {
+                    var warComp = new Dictionary<int, int>();
+                    foreach (var component in
+                    elem.Element("WarehouseComponents").Elements("WarehouseComponent").ToList())
+                    {
+                        warComp.Add(Convert.ToInt32(component.Element("Key").Value),
+                        Convert.ToInt32(component.Element("Value").Value));
+                    }
+                    list.Add(new Warehouse
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        WarehouseName = elem.Element("WarehouseName").Value,
+                        Responsible = elem.Element("Responsible").Value,
+                        DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
+                        WarehouseComponents = warComp
+                    });
+                }
+            }
+            return list;
+        }
+
 
         private void SaveClients()
         {

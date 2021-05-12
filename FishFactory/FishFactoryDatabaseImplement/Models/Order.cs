@@ -14,6 +14,8 @@ namespace FishFactoryDatabaseImplement.Models
 
         public int CannedId { get; set; }
 
+        public int? ImplementerId { get; set; }
+
         [Required]
         public int Count { get; set; }
 
@@ -29,5 +31,9 @@ namespace FishFactoryDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
 
         public virtual Canned Canned { get; set; }
+
+        public virtual Client Client { get; set; }
+
+        public virtual Implementer Implementer { get; set; }
     }
 }
