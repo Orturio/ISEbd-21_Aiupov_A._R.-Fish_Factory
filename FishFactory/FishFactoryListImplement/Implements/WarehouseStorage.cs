@@ -134,7 +134,7 @@ namespace FishFactoryListImplement.Implements
 
         public bool Unrestocking(int Count, int CannedId)
         {
-            return true;
+            throw new NotImplementedException();
         }
 
         private WarehouseViewModel CreateModel(Warehouse warehouse)
