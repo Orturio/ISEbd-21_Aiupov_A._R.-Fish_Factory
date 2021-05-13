@@ -56,9 +56,9 @@ namespace FishFactoryDatabaseImplement.Implements
                     (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
                     (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
                     (model.ImplementerId.HasValue && rec.ImplementerId ==
-                    model.ImplementerId && (rec.Status == OrderStatus.Выполняется ||
+                    model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
                     (model.NeedComponentOrders.HasValue && model.NeedComponentOrders.Value && rec.Status ==
-                    OrderStatus.Требуются_материалы))))
+                    OrderStatus.Требуются_материалы))
                     .Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,

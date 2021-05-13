@@ -57,10 +57,11 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 {
                     throw new Exception("Не найден заказ");
                 }
-                if (order.Status != OrderStatus.Принят)
+                if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
                 {
                     throw new Exception("Заказ не в статусе \"Принят\"");
                 }
+                
                 if (order.ImplementerId.HasValue)
                 {
                     throw new Exception("У заказа уже есть исполнитель");
@@ -80,6 +81,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 if (!_warehouseStorage.Unrestocking(order.Count, order.CannedId))
                 {
                     orderModel.Status = OrderStatus.Требуются_материалы;
+                    orderModel.ImplementerId = null;
                 }
                 _orderStorage.Update(orderModel);
             }            
@@ -95,14 +97,11 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             {
                 throw new Exception("Не найден заказ");
             }
-            if (order.Status != OrderStatus.Выполняется && order.Status != OrderStatus.Требуются_материалы)
+            if (order.Status != OrderStatus.Выполняется)
             {
-                throw new Exception("Заказ не в статусе \"Выполняется\" или \"Требуются материалы\"");
+                throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
-            if (!_warehouseStorage.Unrestocking(order.Count, order.CannedId))
-            {
-                return;
-            }
+            
 
             _orderStorage.Update(new OrderBindingModel
             {
