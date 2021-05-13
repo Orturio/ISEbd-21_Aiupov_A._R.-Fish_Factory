@@ -17,7 +17,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
         {
             try
             {
-                folderName += "\\SoftwareInstallingBackUp";
+                folderName += "\\FishFactoryBackUp";
                 DirectoryInfo dirInfo = new DirectoryInfo(folderName);
                 if (dirInfo.Exists)
                 {
