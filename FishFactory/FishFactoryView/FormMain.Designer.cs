@@ -112,21 +112,7 @@
             this.списокВсехЗаказовToolStripMenuItem});
             this.отчётыToolStripMenuItem.Name = "отчётыToolStripMenuItem";
             this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.отчётыToolStripMenuItem.Text = "Отчеты";
-            // 
-            // списокКомпонентовToolStripMenuItem
-            // 
-            this.списокКомпонентовToolStripMenuItem.Name = "списокКомпонентовToolStripMenuItem";
-            this.списокКомпонентовToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.списокКомпонентовToolStripMenuItem.Text = "Список компонентов";
-            this.списокКомпонентовToolStripMenuItem.Click += new System.EventHandler(this.ComponentsToolStripMenuItem_Click);
-            // 
-            // компонентыПоИзделиямToolStripMenuItem
-            // 
-            this.компонентыПоИзделиямToolStripMenuItem.Name = "компонентыПоИзделиямToolStripMenuItem";
-            this.компонентыПоИзделиямToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.компонентыПоИзделиямToolStripMenuItem.Text = "Компоненты по изделиям";
-            this.компонентыПоИзделиямToolStripMenuItem.Click += new System.EventHandler(this.ComponentCannedsToolStripMenuItem_Click);
+            this.отчётыToolStripMenuItem.Text = "Отчеты";            
             // 
             // списокЗаказовToolStripMenuItem
             // 
@@ -154,7 +140,6 @@
             this.складыПоКомпонентамToolStripMenuItem.Name = "складыПоКомпонентамToolStripMenuItem";
             this.складыПоКомпонентамToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.складыПоКомпонентамToolStripMenuItem.Text = "Склады по компонентам";
-            this.складыПоКомпонентамToolStripMenuItem.Click += new System.EventHandler(this.складыПоКомпонентамToolStripMenuItem_Click_1);
             // 
             // buttonCreateOrder
             // 

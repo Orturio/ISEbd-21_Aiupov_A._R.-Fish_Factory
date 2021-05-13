@@ -169,13 +169,6 @@ MessageBoxIcon.Error);
             form.ShowDialog();
         }
 
-        private void складыПоКомпонентамToolStripMenuItem_Click_1(object sender, EventArgs e)
-        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportComponentWarehouse>();
-            form.ShowDialog();
-        }
-
         private void списокСкладовToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
