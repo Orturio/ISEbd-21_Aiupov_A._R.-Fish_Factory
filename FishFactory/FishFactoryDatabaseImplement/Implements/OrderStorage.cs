@@ -19,7 +19,7 @@ namespace FishFactoryDatabaseImplement.Implements
                 return context.Orders.Include(rec => rec.Canned).Include(rec => rec.Client).Include(rec => rec.Implementer).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    CannedName = context.Canneds.FirstOrDefault(r => r.Id == rec.CannedId).CannedName,
+                    CannedName = rec.Canned.CannedName,
                     CannedId = rec.CannedId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -88,7 +88,7 @@ namespace FishFactoryDatabaseImplement.Implements
                 new OrderViewModel
                 {
                     Id = order.Id,
-                    CannedName = context.Canneds.FirstOrDefault(r => r.Id == order.CannedId).CannedName,
+                    CannedName = order.Canned.CannedName,
                     CannedId = order.CannedId,
                     Count = order.Count,
                     Sum = order.Sum,
