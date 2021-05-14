@@ -32,12 +32,19 @@ namespace FishFactoryListImplement.Implements
             {
                 return null;
             }
-
-
-
-            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date>= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-(model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(CreateModel).ToList();
+            List<OrderViewModel> result = new List<OrderViewModel>();
+            foreach (var order in source.Orders)
+            {
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+                    order.DateCreate.Date == model.DateCreate.Date) ||
+                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
+                    (model.ClientId.HasValue && order.ClientId == model.ClientId))
+                {
+                    result.Add(CreateModel(order));
+                }
+            }
+            return result;
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -123,6 +130,15 @@ namespace FishFactoryListImplement.Implements
                 }
             }
 
+            string clientFIO = null;
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.ClientFIO;
+                }
+            }
+
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -133,7 +149,8 @@ namespace FishFactoryListImplement.Implements
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                CannedName = cannedName
+                CannedName = cannedName,
+                ClientFIO = clientFIO,
             };
         }
     }

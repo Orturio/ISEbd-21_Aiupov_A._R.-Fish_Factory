@@ -79,7 +79,7 @@ namespace FishFactoryFileImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order component)
         {
-            component.ClientId = (int)model.ClientId;
+            component.ClientId = model.ClientId.Value;
             component.CannedId = model.CannedId;
             component.Count = model.Count;
             component.Sum = model.Sum;
@@ -101,7 +101,8 @@ namespace FishFactoryFileImplement.Implements
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                CannedName = canned?.CannedName
+                CannedName = source.Canneds.FirstOrDefault(rec => rec.Id == order.CannedId).CannedName,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO
             };
         }
     }
