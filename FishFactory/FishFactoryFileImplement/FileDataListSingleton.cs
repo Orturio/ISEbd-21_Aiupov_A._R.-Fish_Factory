@@ -218,6 +218,26 @@ Convert.ToInt32(component.Element("Value").Value));
             return list;
         }
 
+        private void SaveMessageInfoes()
+        {
+            if (MessageInfoes != null)
+            {
+                var xElement = new XElement("MessageInfo");
+                foreach (var messageInfo in MessageInfoes)
+                {
+                    xElement.Add(new XElement("MessageInfo",
+                    new XAttribute("MessageId", messageInfo.MessageId),
+                    new XElement("Subject", messageInfo.Subject),
+                    new XElement("SenderName", messageInfo.SenderName),
+                    new XElement("Body", messageInfo.Body),
+                    new XElement("ClientId", messageInfo.ClientId),
+                    new XElement("DateDelivery", messageInfo.DateDelivery)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(MessageInfoFileName);
+            }
+        }
+
         private void SaveComponents()
         {
             if (Components != null)

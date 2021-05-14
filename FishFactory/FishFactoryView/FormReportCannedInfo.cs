@@ -20,7 +20,7 @@ namespace FishFactoryView
         {
             try
             {
-                var dict = logic.GetComponentCanned();
+                var dict = logic.GetCannedComponent();
 
                 if (dict != null)
                 {
@@ -54,7 +54,7 @@ namespace FishFactoryView
                 {
                     try
                     {
-                        logic.SaveCannedInfoToExcelFile(new ReportBindingModel
+                        logic.SaveCannedToExcelFile(new ReportBindingModel
                         {
                             FileName = dialog.FileName
                         });
