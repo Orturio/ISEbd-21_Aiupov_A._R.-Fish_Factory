@@ -59,7 +59,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 }
                 if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
                 {
-                    throw new Exception("Заказ не в статусе \"Принят\"");
+                    throw new Exception("Заказ не в статусе \"Принят\"или \"Требуются материалы\"");
                 }
                 
                 if (order.ImplementerId.HasValue)

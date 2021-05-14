@@ -252,7 +252,7 @@ namespace FishFactoryDatabaseImplement.Migrations
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.WarehouseComponent", b =>
                 {
                     b.HasOne("FishFactoryDatabaseImplement.Models.Component", "Component")
-                        .WithMany()
+                        .WithMany("WarehouseComponent")
                         .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

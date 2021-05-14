@@ -179,7 +179,7 @@ namespace FishFactoryDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
-            order.ClientId = (int) model.ClientId;
+            order.ClientId = model.ClientId.Value;
             order.ImplementerId = model.ImplementerId;
             return order;
         }

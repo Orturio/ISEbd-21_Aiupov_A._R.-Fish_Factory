@@ -5,6 +5,7 @@ using FishFactoryFileImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FishFactoryBusinessLogic.Enums;
 
 namespace FishFactoryFileImplement.Implements
 {
@@ -29,8 +30,11 @@ namespace FishFactoryFileImplement.Implements
                 return null;
             }
             
-            return source.Orders.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)).Select(CreateModel).ToList();
+            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+(model.ClientId.HasValue && rec.ClientId == model.ClientId) || (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
+(model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) || (model.NeedComponentOrders.HasValue && model.NeedComponentOrders.Value && rec.Status == OrderStatus.Требуются_материалы))
+.Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -77,16 +81,17 @@ namespace FishFactoryFileImplement.Implements
             }
         }
 
-        private Order CreateModel(OrderBindingModel model, Order component)
+        private Order CreateModel(OrderBindingModel model, Order order)
         {
-            component.ClientId = (int)model.ClientId;
-            component.CannedId = model.CannedId;
-            component.Count = model.Count;
-            component.Sum = model.Sum;
-            component.Status = model.Status;
-            component.DateCreate = model.DateCreate;
-            component.DateImplement = model.DateImplement;
-            return component;
+            order.ClientId = (int)model.ClientId;
+            order.CannedId = model.CannedId;
+            order.ImplementerId = model.ImplementerId.Value;
+            order.Count = model.Count;
+            order.Sum = model.Sum;
+            order.Status = model.Status;
+            order.DateCreate = model.DateCreate;
+            order.DateImplement = model.DateImplement;
+            return order;
         }
 
         private OrderViewModel CreateModel(Order order)
@@ -96,13 +101,15 @@ namespace FishFactoryFileImplement.Implements
                 Id = order.Id,
                 ClientId = order.ClientId,
                 CannedId = order.CannedId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
                 CannedName = source.Canneds.FirstOrDefault(rec => rec.Id == order.CannedId)?.CannedName,
-                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO,
+                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO
             };
         }
     }

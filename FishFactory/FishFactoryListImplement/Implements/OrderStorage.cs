@@ -5,6 +5,7 @@ using FishFactoryListImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FishFactoryBusinessLogic.Enums;
 
 namespace FishFactoryListImplement.Implements
 {
@@ -33,12 +34,19 @@ namespace FishFactoryListImplement.Implements
             {
                 return null;
             }
-
-
-
-            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date>= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-(model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(CreateModel).ToList();
+            List<OrderViewModel> result = new List<OrderViewModel>();
+            foreach (var order in source.Orders)
+            {
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) ||
+(model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
+(model.ClientId.HasValue && order.ClientId == model.ClientId) || (model.FreeOrders.HasValue && model.FreeOrders.Value && order.Status == OrderStatus.Принят) ||
+(model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется) ||
+(model.NeedComponentOrders.HasValue && model.NeedComponentOrders.Value && order.Status == OrderStatus.Требуются_материалы))
+                {
+                    result.Add(CreateModel(order));
+                }
+            }
+            return result;
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -105,6 +113,7 @@ namespace FishFactoryListImplement.Implements
         {
             order.CannedId = model.CannedId;
             order.ClientId = (int)model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -124,11 +133,22 @@ namespace FishFactoryListImplement.Implements
                 }
             }
 
+            string ImplementerFIO = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.CannedId)
+                {
+                    ImplementerFIO = implementer.ImplementerFIO;
+                }
+            }
+
             return new OrderViewModel
             {
                 Id = order.Id,
                 ClientId = order.ClientId,
                 CannedId = order.CannedId,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = ImplementerFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
