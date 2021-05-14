@@ -133,12 +133,21 @@ namespace FishFactoryListImplement.Implements
                 }
             }
 
+
             string ImplementerFIO = null;
             foreach (var implementer in source.Implementers)
             {
                 if (implementer.Id == order.CannedId)
                 {
                     ImplementerFIO = implementer.ImplementerFIO;
+
+            string clientFIO = null;
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.ClientFIO;
+
                 }
             }
 
@@ -154,7 +163,8 @@ namespace FishFactoryListImplement.Implements
                 DateCreate = order.DateCreate,
                 Status = order.Status,
                 DateImplement = order.DateImplement,
-                CannedName = cannedName
+                CannedName = cannedName,
+                ClientFIO = clientFIO,
             };
         }
     }

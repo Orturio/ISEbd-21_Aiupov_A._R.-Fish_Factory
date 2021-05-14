@@ -58,10 +58,5 @@ namespace FishFactoryView
                 }
             }
         }
-
-        private void FormReportAllOrders_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
