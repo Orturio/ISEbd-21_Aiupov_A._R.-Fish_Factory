@@ -42,29 +42,7 @@ namespace FishFactoryView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
             }
-        }
-
-        private void ButtonAdd_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormClient>();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                LoadData();
-            }
-        }
-
-        private void ButtonUpd_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Container.Resolve<FormClient>();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
-        }
+        }        
 
         private void ButtonDel_Click(object sender, EventArgs e)
         {
