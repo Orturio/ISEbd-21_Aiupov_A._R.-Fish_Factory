@@ -17,13 +17,15 @@ namespace FishFactoryView
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _reportLogic;
         private readonly WorkModeling workModeling;
+        private BackUpAbstractLogic _backUpAbstractLogic;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling modeling)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling modeling, BackUpAbstractLogic backUp)
         {
             InitializeComponent();
-            this._orderLogic = orderLogic;
-            this._reportLogic = reportLogic;
+            _orderLogic = orderLogic;
+            _reportLogic = reportLogic;
             workModeling = modeling;
+            _backUpAbstractLogic = backUp;
         }
 
         private void FormMain_Load(object sender, EventArgs e)

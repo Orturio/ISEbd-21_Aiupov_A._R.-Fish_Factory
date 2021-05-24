@@ -27,6 +27,8 @@ namespace FishFactoryFileImplement
 
         private readonly string ImplementerFileName = "Implementer.xml";
 
+        private readonly string MessageInfoFileName = "MessageInfo.xml";
+
         public List<Component> Components { get; set; }
 
         public List<Order> Orders { get; set; }
@@ -40,6 +42,8 @@ namespace FishFactoryFileImplement
         public List<Warehouse> Warehouses { get; set; }
 
         public List<Implementer> Implementers { get; set; }
+
+        public List<MessageInfo> MessageInfoes { get; set; }
 
         private FileDataListSingleton()
         {

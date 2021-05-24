@@ -43,16 +43,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             return _messageInfoStorage.GetFilteredList(model);
         }
 
-        public void CreateOrder(MessageInfoBindingModel model)
-        {
-            var client = _clientStorage.GetElement(new ClientBindingModel
-            {
-                Email = model.FromMailAddress
-            });
-            model.ClientId = client?.Id;
-            _messageInfoStorage.Insert(model);
-        }
-
         public static void MailConfig(MailConfig config)
         {
             smtpClientHost = config.SmtpClientHost;
