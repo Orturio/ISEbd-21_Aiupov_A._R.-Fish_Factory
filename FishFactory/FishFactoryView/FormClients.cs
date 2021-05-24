@@ -42,7 +42,7 @@ namespace FishFactoryView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
             }
-        }
+        }        
 
         private void ButtonDel_Click(object sender, EventArgs e)
         {

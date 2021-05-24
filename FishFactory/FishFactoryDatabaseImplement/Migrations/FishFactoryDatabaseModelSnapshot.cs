@@ -230,6 +230,13 @@ namespace FishFactoryDatabaseImplement.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FishFactoryDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("FishFactoryDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessageInfo")
+                        .HasForeignKey("ClientId");
+                });
+
             modelBuilder.Entity("FishFactoryDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("FishFactoryDatabaseImplement.Models.Canned", "Canned")

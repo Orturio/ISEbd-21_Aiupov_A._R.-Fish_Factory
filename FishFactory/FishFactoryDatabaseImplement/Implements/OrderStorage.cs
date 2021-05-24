@@ -6,6 +6,7 @@ using FishFactoryBusinessLogic.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using FishFactoryBusinessLogic.Enums;
 using System.Linq;
 
 namespace FishFactoryDatabaseImplement.Implements
@@ -30,6 +31,7 @@ namespace FishFactoryDatabaseImplement.Implements
                     DateImplement = rec.DateImplement,
                     ClientId = rec.ClientId,
                     ClientFIO = rec.Client.ClientFIO,
+                    ImplementerId = rec.ImplementerId,
                     ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty
                 }).ToList();
             }

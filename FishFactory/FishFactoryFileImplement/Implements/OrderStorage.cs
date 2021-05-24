@@ -2,6 +2,7 @@
 using FishFactoryBusinessLogic.Interfaces;
 using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryFileImplement.Models;
+using FishFactoryBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

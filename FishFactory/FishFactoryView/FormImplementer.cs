@@ -1,8 +1,8 @@
 ﻿using System;
 using FishFactoryBusinessLogic.BindingModels;
 using FishFactoryBusinessLogic.BusinessLogics;
-using System.Windows.Forms;
 using Unity;
+using System.Windows.Forms;
 
 namespace FishFactoryView
 {

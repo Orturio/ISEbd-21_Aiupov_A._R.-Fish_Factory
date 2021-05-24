@@ -2,6 +2,7 @@
 using FishFactoryBusinessLogic.Interfaces;
 using FishFactoryBusinessLogic.ViewModels;
 using FishFactoryListImplement.Models;
+using FishFactoryBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +113,7 @@ namespace FishFactoryListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.CannedId = model.CannedId;
+            order.ImplementerId = model.ImplementerId;
             order.ClientId = (int)model.ClientId;
             order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
@@ -130,6 +132,24 @@ namespace FishFactoryListImplement.Implements
                 if (canned.Id == order.CannedId)
                 {
                     cannedName = canned.CannedName;
+                }
+            }
+
+            string clientFIO = null;
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.ClientFIO;
+                }
+            }
+
+            string ImplementerFIO = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.CannedId)
+                {
+                    ImplementerFIO = implementer.ImplementerFIO;
                 }
             }
 

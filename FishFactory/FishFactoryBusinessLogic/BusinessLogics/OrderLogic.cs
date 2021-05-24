@@ -1,5 +1,6 @@
 ﻿using FishFactoryBusinessLogic.BindingModels;
 using FishFactoryBusinessLogic.Enums;
+using FishFactoryBusinessLogic.HelperModels;
 using FishFactoryBusinessLogic.Interfaces;
 using FishFactoryBusinessLogic.ViewModels;
 using System;
@@ -10,6 +11,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly IClientStorage _clientStorage;
 
         private readonly object locker = new object();
 
@@ -42,6 +44,16 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят,
                 ClientId = model.ClientId
+            });
+
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = model.ClientId
+                })?.Email,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
             });
         }
 
@@ -134,12 +146,23 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 CannedId = order.CannedId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен,
                 ClientId = order.ClientId
+            });
+
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} оплачен."
             });
         }
     }

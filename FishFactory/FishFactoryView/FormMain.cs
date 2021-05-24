@@ -15,17 +15,15 @@ namespace FishFactoryView
         public new IUnityContainer Container { get; set; }
 
         private readonly OrderLogic _orderLogic;
-
+        private readonly ReportLogic _reportLogic;
         private readonly WorkModeling workModeling;
 
-        private ReportLogic report;
-
-        public FormMain(OrderLogic orderLogic, ReportLogic Report, WorkModeling modeling)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling modeling)
         {
             InitializeComponent();
-            _orderLogic = orderLogic;
+            this._orderLogic = orderLogic;
+            this._reportLogic = reportLogic;
             workModeling = modeling;
-            report = Report;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -83,58 +81,9 @@ namespace FishFactoryView
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+MessageBoxIcon.Error);
                 }
             }
-        }
-        private void ButtonRef_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormWarehouses>();
-            form.ShowDialog();
-        }
-        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormWarehouseRestocking>();
-            form.ShowDialog();
-        }
-        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportOrders>();
-            form.ShowDialog();
-        }
-        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    report.SaveCannedsToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                }
-            }
-        }
-        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportCannedInfo>();
-            form.ShowDialog();
-        }
-        private void списокВсехЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportAllOrders>();
-            form.ShowDialog();
-        }
-        private void складыПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportComponentWarehouse>();
-            form.ShowDialog();
         }
         private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -167,6 +116,30 @@ namespace FishFactoryView
         {
             workModeling.DoWork();
             LoadData();
+        }
+
+        private void клиентыToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            workModeling.DoWork();
+            LoadData();
+        }
+
+        private void исполнителиToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
+        private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMails>();
+            form.ShowDialog();
         }
     }
 }
