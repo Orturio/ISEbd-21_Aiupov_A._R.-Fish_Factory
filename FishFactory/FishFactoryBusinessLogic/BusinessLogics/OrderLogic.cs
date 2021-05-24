@@ -17,11 +17,13 @@ namespace FishFactoryBusinessLogic.BusinessLogics
 
         private readonly IWarehouseStorage _warehouseStorage;
 
-        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage)
+        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IClientStorage clientStorage)
         {
             _orderStorage = orderStorage;
             _warehouseStorage = warehouseStorage;
+            _clientStorage = clientStorage;
         }
+
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             if (model == null)
@@ -34,6 +36,7 @@ namespace FishFactoryBusinessLogic.BusinessLogics
             }
             return _orderStorage.GetFilteredList(model);
         }
+
         public void CreateOrder(CreateOrderBindingModel model)
         {           
             _orderStorage.Insert(new OrderBindingModel
@@ -96,6 +99,16 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                     orderModel.ImplementerId = null;
                 }
                 _orderStorage.Update(orderModel);
+
+                MailLogic.MailSendAsync(new MailSendInfo
+                {
+                    MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                    {
+                        Id = order.ClientId
+                    })?.Email,
+                    Subject = $"Заказ №{order.Id}",
+                    Text = $"Заказ №{order.Id} передан в работу."
+                });
             }            
         }
 
@@ -114,7 +127,6 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
             
-
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
@@ -127,7 +139,18 @@ namespace FishFactoryBusinessLogic.BusinessLogics
                 ClientId = order.ClientId,
                 ImplementerId = model.ImplementerId
             });
+
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} выполнен."
+            });
         }
+
         public void PayOrder(ChangeStatusBindingModel model)
         {
             var order = _orderStorage.GetElement(new OrderBindingModel

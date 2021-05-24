@@ -21,5 +21,6 @@ namespace FishFactoryDatabaseImplement
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<WarehouseComponent> WarehouseComponents { set; get; }
         public virtual DbSet<Implementer> Implementers { set; get; }
+        public virtual DbSet<MessageInfo> MessageInfoes { set; get; }
     }
 }

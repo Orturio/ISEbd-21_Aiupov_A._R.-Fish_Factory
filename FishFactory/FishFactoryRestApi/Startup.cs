@@ -36,8 +36,8 @@ namespace FishFactoryRestApi
             {
                 SmtpClientHost = "smtp.gmail.com",
                 SmtpClientPort = 587,
-                MailLogin = "aiupov2012@gmail.com",
-                MailPassword = "dagh084thioa",
+                MailLogin = "testforlabsprogramming@gmail.com",
+                MailPassword = "12345qwerty73",
             });
             services.AddTransient<WarehouseLogic>();
             services.AddTransient<ComponentLogic>();

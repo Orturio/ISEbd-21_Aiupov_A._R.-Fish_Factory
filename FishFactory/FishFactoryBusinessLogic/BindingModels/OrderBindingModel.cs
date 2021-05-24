@@ -11,16 +11,12 @@ namespace FishFactoryBusinessLogic.BindingModels
 
         public int CannedId { get; set; }
 
-        [DataMember]
         public int? ImplementerId { get; set; }
 
-        [DataMember]
         public bool? FreeOrders { get; set; }
 
-        [DataMember]
         public bool? NeedComponentOrders { get; set; }
 
-        [DataMember]
         public int Count { get; set; }
 
         public decimal Sum { get; set; }

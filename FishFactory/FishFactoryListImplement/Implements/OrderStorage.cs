@@ -151,22 +151,14 @@ namespace FishFactoryListImplement.Implements
                 {
                     ImplementerFIO = implementer.ImplementerFIO;
                 }
-            }
-
-            string ImplementerFIO = null;
-            foreach (var implementer in source.Implementers)
-            {
-                if (implementer.Id == order.CannedId)
-                {
-                    ImplementerFIO = implementer.ImplementerFIO;
-                }
-            }
+            }           
 
             return new OrderViewModel
             {
                 Id = order.Id,
                 ClientId = order.ClientId,
                 CannedId = order.CannedId,
+                ClientFIO = clientFIO,
                 ImplementerId = order.ImplementerId,
                 ImplementerFIO = ImplementerFIO,
                 Count = order.Count,

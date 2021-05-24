@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace FishFactoryClientApp.Controllers
 {
@@ -139,13 +140,15 @@ namespace FishFactoryClientApp.Controllers
             Response.Redirect("Index");
         }
 
-        public IActionResult Mails()
+        public IActionResult Mails(int page = 1)
         {
             if (Program.Client == null)
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetMessages?clientId={Program.Client.Id}"));
+            int pageSize = 7;             
+            return View(APIClient.GetRequest<PageViewModel>($"api/client/GetPage?pageSize={pageSize}" +
+                $"&page={page}&ClientId={Program.Client.Id}"));
         }
 
         [HttpPost]

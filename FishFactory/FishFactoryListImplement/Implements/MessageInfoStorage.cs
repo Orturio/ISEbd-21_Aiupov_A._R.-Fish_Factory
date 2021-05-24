@@ -123,5 +123,15 @@ namespace FishFactoryListImplement.Implements
                 DateDelivery = messageInfo.DateDelivery
             };
         }
+
+        public int Count()
+        {
+                return source.MessageInfoes.Count;
+        }
+
+        public List<MessageInfoViewModel> GetMessagesForPage(MessageInfoBindingModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -54,7 +54,6 @@ namespace FishFactoryView
             currentContainer.RegisterType<IClientStorage, ClientStorage>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new
-            currentContainer.RegisterType<IImplementerStorage, ImplementerStorage>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMessageInfoStorage, MessageInfoStorage>(new
             HierarchicalLifetimeManager());

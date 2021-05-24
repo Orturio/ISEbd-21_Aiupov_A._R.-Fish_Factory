@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FishFactoryFileImplement.Implements
 {
-    public class ImplementerStorage : IImplementerStorage
+    public class ImplementerStorage
     {
         private readonly FileDataListSingleton source;
 

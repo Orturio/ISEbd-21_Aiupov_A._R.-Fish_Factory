@@ -85,13 +85,71 @@ MessageBoxIcon.Error);
                 }
             }
         }
+
+        private void buttonRef_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormWarehouseRestocking>();
+            form.ShowDialog();
+        }
+
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+
+        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _reportLogic.SaveCannedsToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportCannedInfo>();
+            form.ShowDialog();  
+        }
+
+        private void списокВсехЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportAllOrders>();
+            form.ShowDialog();
+        }
+
+        private void складыПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportComponentWarehouse>();
+            form.ShowDialog();
+        }
+
         private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    report.SaveWarehousesToWordFile(new ReportBindingModel
+                    _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
                     {
                         FileName = dialog.FileName
                     });
@@ -116,30 +174,12 @@ MessageBoxIcon.Error);
         {
             workModeling.DoWork();
             LoadData();
-        }
-
-        private void клиентыToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormClients>();
-            form.ShowDialog();
-        }
-
-        private void запускРаботToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            workModeling.DoWork();
-            LoadData();
-        }
-
-        private void исполнителиToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormImplementers>();
-            form.ShowDialog();
-        }
+        }              
 
         private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormMails>();
             form.ShowDialog();
-        }
+        }      
     }
 }

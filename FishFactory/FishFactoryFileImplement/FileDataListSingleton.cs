@@ -21,6 +21,8 @@ namespace FishFactoryFileImplement
 
         private readonly string CannedFileName = "Canned.xml";
 
+        private readonly string MessageInfoFileName = "MessageInfo.xml";
+
         private readonly string WarehouseFileName = "Warehouse.xml";
 
         private readonly string ImplementerFileName = "Implementer.xml";
@@ -30,6 +32,8 @@ namespace FishFactoryFileImplement
         public List<Order> Orders { get; set; }
 
         public List<Canned> Canneds { get; set; }
+
+        public List<MessageInfo> MessageInfoes { get; set; }
 
         public List<Client> Clients { get; set; }
 
@@ -45,6 +49,7 @@ namespace FishFactoryFileImplement
             Warehouses = LoadWarehouses();
             Clients = LoadClients();
             Implementers = LoadImplementers();
+            MessageInfoes = LoadMessageInfoes();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -64,6 +69,7 @@ namespace FishFactoryFileImplement
             SaveWarehouses();
             SaveClients();
             SaveImplementers();
+            SaveMessageInfoes();
         }
 
         private List<MessageInfo> LoadMessageInfoes()
@@ -89,7 +95,7 @@ namespace FishFactoryFileImplement
             }
             return list;
         }
-
+        
         private List<Component> LoadComponents()
         {
             var list = new List<Component>();
@@ -139,27 +145,6 @@ namespace FishFactoryFileImplement
                         Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
                         DateImplement = dateImplement
-                    });
-                }
-            }
-            return list;
-        }
-
-        private List<Implementer> LoadImplementers()
-        {
-            var list = new List<Implementer>();
-            if (File.Exists(ImplementerFileName))
-            {
-                XDocument xDocument = XDocument.Load(ImplementerFileName);
-                var xElements = xDocument.Root.Elements("Implementer").ToList();
-                foreach (var elem in xElements)
-                {
-                    list.Add(new Implementer
-                    {
-                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        ImplementerFIO = elem.Element("ImplementerFIO").Value,
-                        WorkingTime = Convert.ToInt32(elem.Element("WorkingTime").Value),
-                        PauseTime = Convert.ToInt32(elem.Element("PauseTime").Value),
                     });
                 }
             }
@@ -423,24 +408,6 @@ Convert.ToInt32(component.Element("Value").Value));
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(CannedFileName);
             }
-        }
-
-        private void SaveImplementers()
-        {
-            if (Implementers != null)
-            {
-                var xElement = new XElement("Implementers");
-                foreach (var implementer in Implementers)
-                {
-                    xElement.Add(new XElement("Implementer",
-                    new XAttribute("Id", implementer.Id),
-                    new XElement("ImplementerFIO", implementer.ImplementerFIO),
-                    new XElement("WorkingTime", implementer.WorkingTime),
-                    new XElement("PauseTime", implementer.PauseTime)));
-                }
-                XDocument xDocument = new XDocument(xElement);
-                xDocument.Save(ImplementerFileName);
-            }
-        }
+        }        
     }
 }

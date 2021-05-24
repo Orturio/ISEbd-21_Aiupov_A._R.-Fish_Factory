@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.WarehouseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Component = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,10 +44,20 @@
             this.WarehouseColumn,
             this.Component,
             this.Count});
-            this.dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView.Location = new System.Drawing.Point(2, 57);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(676, 270);
             this.dataGridView.TabIndex = 4;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(70, 12);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(130, 23);
+            this.buttonSave.TabIndex = 3;
+            this.buttonSave.Text = "Сохранить в Excel ";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSaveToExcel_Click);
             // 
             // WarehouseColumn
             // 
@@ -66,16 +76,6 @@
             this.Count.HeaderText = "Количество";
             this.Count.Name = "Count";
             this.Count.Width = 210;
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(526, 279);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(143, 39);
-            this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = "Сохранить в Excel ";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.ButtonSaveToExcel_Click);
             // 
             // FormReportComponentWarehouse
             // 
