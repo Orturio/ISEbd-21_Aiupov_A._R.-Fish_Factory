@@ -70,6 +70,7 @@ namespace FishFactoryView
             currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ImplementerLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<MailLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<BackUpAbstractLogic, BackUpLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
         private static void MailCheck(object obj)
@@ -102,6 +103,7 @@ namespace FishFactoryView
                                 Visible = columnAttr.Visible,
                                 Width = columnAttr.Width
                             };
+                            column.DefaultCellStyle.Format = columnAttr.DateFormat;
                             if (columnAttr.GridViewAutoSize !=
                             GridViewAutoSize.None)
                             {

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
-using Unity;
 using FishFactoryBusinessLogic.BusinessLogics;
 using FishFactoryBusinessLogic.BindingModels;
+using FishFactoryBusinessLogic.ViewModels;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace FishFactoryView
 {
     public partial class FormReportComponentWarehouse : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         private readonly ReportLogic logic;
 
         public FormReportComponentWarehouse(ReportLogic logic)
@@ -23,7 +22,9 @@ namespace FishFactoryView
         {
             try
             {
-                var dict = logic.GetComponentWarehouse();
+                MethodInfo method = logic.GetType().GetMethod("GetComponentWarehouse");
+                List<ReportComponentWarehouseViewModel> dict = (List<ReportComponentWarehouseViewModel>)
+                    method.Invoke(logic, new object[] { });
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -54,10 +55,11 @@ namespace FishFactoryView
                 {
                     try
                     {
-                        logic.SaveComponentWarehouseToExcelFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveComponentWarehouseToExcelFile");
+                        method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName
-                        });
+                        } });
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     }

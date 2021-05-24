@@ -2,7 +2,9 @@
 using FishFactoryBusinessLogic.BusinessLogics;
 using System;
 using System.Windows.Forms;
-using Unity;
+using FishFactoryBusinessLogic.ViewModels;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace FishFactoryView
 {
@@ -20,7 +22,9 @@ namespace FishFactoryView
         {
             try
             {
-                var dict = logic.GetCannedComponent();
+                MethodInfo method = logic.GetType().GetMethod("GetCannedComponent");
+                List<ReportCannedComponentViewModel> dict = (List<ReportCannedComponentViewModel>)
+                    method.Invoke(logic, new object[] { });
 
                 if (dict != null)
                 {
@@ -54,10 +58,11 @@ namespace FishFactoryView
                 {
                     try
                     {
-                        logic.SaveCannedToExcelFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveComponentPackageToExcelFile");
+                        method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName
-                        });
+                        } });
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
