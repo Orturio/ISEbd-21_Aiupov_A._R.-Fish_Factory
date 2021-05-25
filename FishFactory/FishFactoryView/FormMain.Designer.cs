@@ -172,6 +172,7 @@ namespace FishFactoryView
             this.отчётыToolStripMenuItem.Name = "отчётыToolStripMenuItem";
             this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчётыToolStripMenuItem.Text = "Отчёты";
+
             // 
             // списокЗаказовToolStripMenuItem
             // 
